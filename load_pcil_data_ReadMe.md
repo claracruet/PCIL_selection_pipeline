@@ -135,7 +135,7 @@ Higher `F` values are preferred when other genomic characteristics are comparabl
 * `select_pcil_positive()`
 * `select_pcil_negative()`
 
-[Detailed DArTseq and inbreeding calculation workflow](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Clara/PCIL_Selection_Script/Development_files)
+[Inbreeding calculation workflow](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Clara/PCIL_Selection_Script/Development_files)
 
 ---
 
@@ -179,7 +179,7 @@ The IBS matrix is primarily used during PCIL (−) selection to identify negativ
 
 * `select_pcil_negative()`
 
-[Detailed DArTseq and inbreeding calculation workflow](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Clara/PCIL_Selection_Script/Development_files)
+[IBS calculation workflow](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Clara/PCIL_Selection_Script/Development_files)
 
 ---
 
@@ -227,40 +227,6 @@ This allows users to provide gene IDs directly rather than manually supplying ge
 * `select_pcil_positive(type = "gene")`
 
 ---
-
-# Data provenance
-
-The PCIL genomic datasets originate from several upstream analyses:
-
-```text
-PCIL DArTseq genotype data
-        │
-        ├── Introgression mapping
-        │       ↓
-        │   introgressions
-        │   genomewide_introgressions
-        │
-        ├── Inbreeding analysis
-        │       ↓
-        │   inbreeding_coefficient
-        │
-        └── IBS distance analysis
-                ↓
-            IBS_dis
-
-PCIL breeding metadata
-        ↓
-     metadata
-
-BTx623 v5.1 annotation
-        ↓
-    gene_regions
-
-            ↓
-      load_pcil_data()
-            ↓
-        pcil_data
-```
 
 For users of the PCIL selection pipeline, these datasets are loaded automatically through `load_pcil_data()`.
 
