@@ -697,7 +697,7 @@ If:
 ```r
 sel = 5
 ```
-
+[View `select_pcil_positive()`](https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832597439/raw/8c3218eb4ef9616885befe1603efda18423c85b0/select_pcil_positive.R)
 the function returns:
 
 ```text
