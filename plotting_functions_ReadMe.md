@@ -377,3 +377,11 @@ PCIL (+) / PCIL (-) pairs
 Genome-wide comparison of
 experimental contrasts
 ```
+---
+
+[View `plot_all_pcil_positive()` source](https://gist.githubusercontent.com/claracruet/d4b8c7dfb22d50c5e31f9a1c3f1ffb94/raw/c556cf16337fe8d0e5692ec78a712389e264771e/plot_all_pcil_positive.R)
+
+[View `plot_best_pcil_positive()` source](https://gist.githubusercontent.com/claracruet/7613608cf517186d49bd234668d61e02/raw/27d5d1725b772e3edeff23c1a2186f00aee701ce/plot_best_pcil_positive.R)
+
+[View `plot_pcil_pairs()` source](https://gist.githubusercontent.com/claracruet/88850837f726cdc1a797993e93261847/raw/a2064d80d12b9c7b8919a8b2bc03cf1e77d6a778/plot_pcil_pairs.R)
+
