@@ -726,5 +726,7 @@ The extended output is useful when the user wants multiple genetically appropria
 in the same way as required by `select_pcil_positive`. 
 
 The `select_pcil_negative` should be restricted by `available_ids` or `global_available_ids` in the same way than `select_pcil_postive`/
+---
 
+[View `select_pcil_negative()` source](https://gist.githubusercontent.com/claracruet/3f758a2f7d74a7d2f8278309b9500f67/raw/7d3da56452e8b338524d18a444066ff758202a57/select_pcil_negative.R)
 
