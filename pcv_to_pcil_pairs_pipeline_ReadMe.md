@@ -189,44 +189,77 @@ best_pcil_pos_plot
 Select PCIL (-) controls for the final PCIL (+) lines.
 
 ```r
-pcil_negatives <- select_pcil_negative(
-  pcil_data = pcil_data,
-  n_neg = 3,
-  pcil_positive_df = pcil_positives_filtered$best_lines,
-  regions = pcil_positives_filtered$regions,
-  available_ids = results$pcil_summary[
-    c("sample_id", "selection")
-  ],
-  global_available_ids = samples_to_keep
-)
+# loading the PCIL (-)
+source("https://gist.githubusercontent.com/claracruet/3f758a2f7d74a7d2f8278309b9500f67/raw/select_pcil_negative.R")
+
+# running pcil_neg
+pcil_negatives<- select_pcil_negative(pcil_data = pcil_data, 
+                                            n_neg = 3, 
+                                            # any other information such as phenotypes for your final selection
+                                            pcil_positive_df = pcil_positives$best_lines, 
+                                            # for your PCV
+                                            regions =   pcil_positives$regions, 
+                                            available_ids = results$pcil_summary[c("sample_id","selection")], 
+                                            ) 
 ```
+<img width="792" height="429" alt="image" src="https://github.com/user-attachments/assets/fd8a87ab-ae6b-4870-8e4e-51ca5df833f6" />
+Initial candidates: Total number of PCIL (-)
+Using subset PCIL (+), best PCIL (+) from the previous step
+
+<img width="605" height="81" alt="image" src="https://github.com/user-attachments/assets/66969f89-e0c8-4b4a-b7f4-4eb26ee51bc5" />
+This shows you the selection process for each PCIL (+), it shows the PCIL (+) , then the number of candidates within the same family, then the ones that have the closest IBS, then it shows you the reccomended and it's IBS distance. The lowest the number the more similar to the PCIL (+).
+
 
 Best PCIL (-) match:
 
 ```r
+# select_pcil_positive, returns a list
+names(pcil_negatives)
+```
+
+<img width="307" height="34" alt="image" src="https://github.com/user-attachments/assets/27aedda2-65be-4eaf-92f8-f6c2fc573389" />
+
+```
+# we have now a list of two
+# 'pairs_best', provides the number one PCIL (-) for each PCIL positive.
 head(pcil_negatives$pairs_best)
 ```
+<img width="821" height="173" alt="image" src="https://github.com/user-attachments/assets/cc6359c0-9d71-460c-8ba5-97ed99c87ede" />
 
 Additional ranked PCIL (-) candidates:
 
 ```r
+# we have now a list of two
+# 'pairs_extended', provides the top ranked PCIL (-) for the 'n_neg' you provided.
 head(pcil_negatives$pairs_extended)
 ```
+<img width="813" height="199" alt="image" src="https://github.com/user-attachments/assets/c8be6ae6-0c9d-401f-9c0e-e54c71d30ddf" />
 
-[PCIL (-) selection documentation](LINK_TO_PCIL_NEGATIVE_README)
+[PCIL (-) selection documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md)
 
 ---
 
 # 9. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
-pcil_pair_plots <- plot_pcil_pairs(
-  pcil_neg_sel = pcil_negatives$pairs_extended,
-  pcil_data = pcil_data
-)
+# Sourcing function to plot pcil pairs
+source("https://gist.githubusercontent.com/claracruet/88850837f726cdc1a797993e93261847/raw/plot_pcil_pairs.R")
 
-pcil_pair_plots
+# loading pcil pair plotting function
+plot_pcil_pairs_negatives<- plot_pcil_pairs(pcil_neg_sel = pcil_negatives_seed$pairs_extended,  # you must indicate if you want 'pair_best' or 'pairs_extended'
+                pcil_data = pcil_data, pcil_pos = pcil_positives
+                )
+names(plot_pcil_pairs_negatives)
+
 ```
+<img width="543" height="57" alt="image" src="https://github.com/user-attachments/assets/cad4eec8-2588-4d5f-b097-275e666682be" />
+You will obtain one plot per each variant and per each PCIL (+).
+
+```
+# Plotting my number one ranked PCIL (+)
+plot_pcil_pairs_negatives$INDEL_Chr03_66131272_GMS_MN2025_125057
+```
+<img width="2623" height="1638" alt="image" src="https://github.com/user-attachments/assets/7aa040c8-4847-4c13-b0b7-433a8d84d47f" />
 
 Use:
 
@@ -236,7 +269,7 @@ pcil_negatives$pairs_best
 
 instead if only the best PCIL (-) pair should be plotted.
 
-[PCIL plotting documentation](LINK_TO_PLOTTING_README)
+[PCIL plotting documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md)
 
 ---
 
