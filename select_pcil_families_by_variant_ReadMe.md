@@ -80,16 +80,10 @@ The function identifies all parental libraries represented in the current PCIL p
 Variant genotypes are obtained using:
 
 ```r
-pg_query_genotypes(
-  variant_ids = selection,
-  meta_data = c(
-    "variant_id",
-    "chrom",
-    "pos",
-    "ref",
-    "alt",
-    "variant_type"
-  )
+variant_geno<-panGenomeBreedr::fetch_genotypes_by_id(
+  variant_ids=selection,
+  meta_data=c("variant_id","chrom","pos","ref","alt","variant_type"), 
+      connect_db_mode = "online"
 )
 ```
 
@@ -289,4 +283,4 @@ pcil_families$geno_pi
 pcil_families$pcil_summary
 ```
 
-[View `select_pcil_families_by_variant()` source](https://gist.githubusercontent.com/claracruet/7fb4425da272d985d747eb032550c80f/raw/2cdfd5661511cd9574d5e01b5e47ec9a853c83b0/select_pcil_fam_by_variant_pangb.R)
+[View `select_pcil_families_by_variant()` source](https://gist.githubusercontent.com/claracruet/7fb4425da272d985d747eb032550c80f/raw/fa264eaf3843f42abb46378eff9279842057ee1c/select_pcil_fam_by_variant_pangb.R)
