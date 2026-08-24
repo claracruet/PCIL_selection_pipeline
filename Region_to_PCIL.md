@@ -236,6 +236,8 @@ instead if only the best PCIL (-) pair should be plotted.
 At the end of the workflow, the primary objects are:
 
 ```text
+pcil_positives$pcil_positive
+        ↓
 PCIL (+) candidates
 
 pcil_positives$best_lines
