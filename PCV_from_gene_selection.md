@@ -76,4 +76,4 @@ head(pg_variant_summary[1:10,1:10])
 ```
 <img width="1742" height="256" alt="image" src="https://github.com/user-attachments/assets/10668097-5827-4d55-ba17-a751e5f3a34e" />
 
-# From here I am going to pursue variant "INDEL_Chr03_66131272 "
+# From here I am going to pursue variant "INDEL_Chr03_66131272"
