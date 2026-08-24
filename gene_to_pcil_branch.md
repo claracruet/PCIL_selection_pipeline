@@ -236,9 +236,6 @@ instead if only the best PCIL (-) pair should be plotted.
 At the end of the workflow, the primary objects are:
 
 ```text
-results$pcil_summary
-        ↓
-Families expected to segregate for the PCV
 
 pcil_positives$pcil_positive
         ↓
