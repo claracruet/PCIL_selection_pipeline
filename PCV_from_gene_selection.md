@@ -18,10 +18,10 @@ Start with a gene of interest and retrieve its annotated variants.
 
 ```r
 # using pg_query_db to get type of variants that we have in our gene
-pg_ann_region<-  pg_query_db(
+pg_ann_region<-  panGenomeBreedr::fetch_table_region(
     table_name = c("annotations"),
     chrom = "Chr03",
-    gene_name = "Sobic.003G260300")
+    gene_name = "Sobic.003G260300", connect_db_mode = 'online')
 
 
 head(pg_ann_region[1:10,1:10])
@@ -52,7 +52,8 @@ Retrieve their genotypes:
 
 ```r
 # Now we are going to extract the genotypic information to get the maf to assist in our decision
-variant_geno<- pg_query_genotypes(variant_ids = pg_ann_region_mod$variant_id)
+# Extracting genotypes at high impact variants, we are usign pg_query_genotypes
+variant_geno<- fetch_genotypes_by_id(variant_ids = pg_ann_region_mod$variant_id, connect_db_mode = 'online')
 
 head(variant_geno[1:10,1:10])
 ```
