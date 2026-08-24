@@ -1,3 +1,43 @@
+# PCIL Selection Pipeline
+
+The **Pangenome Characterized Introgression Line (PCIL) Selection Pipeline** provides a workflow for identifying PCIL (+) and PCIL (−) pairs for genes, putative causative variants (PCVs), or genomic regions of interest.
+
+PCIL (+) lines contain a donor introgression spanning the genomic target, while PCIL (−) lines are selected as genetically similar controls that do not contain the target introgression. The pipeline integrates PCIL introgression mapping, population metadata, genome-wide genetic similarity, and inbreeding information to support selection of informative PCIL pairs.
+
+## Requirements
+
+The workflow is implemented in **R** and uses functions from the PCIL selection pipeline together with the following packages:
+
+```r
+library(panGenomeBreedr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
+## Choosing a starting point
+
+The pipeline can be entered using three types of genomic targets:
+
+| Target | Use when |
+|---|---|
+| **PCV** | A specific putative causative variant is being targeted. If the chromosome and position of the PCV are not yet known, variant annotation and genotype information can first be used to identify the PCV from a candidate gene. |
+| **Gene** | A candidate gene is known and the objective is to identify PCILs carrying an introgression spanning the gene. |
+| **Region** | A genomic interval is known and the objective is to identify PCILs carrying an introgression spanning the defined region. |
+
+
+## General workflow
+
+Regardless of the starting target, the selection workflow ultimately identifies:
+
+- **PCIL (+):** lines carrying a donor introgression spanning the target.
+- **PCIL (−):** genetically similar lines selected as controls that do not carry the target introgression.
+
+Optional filters and ranking parameters can be applied during selection to restrict the population based on factors such as **seed availability, phenotypic data availability, family membership, or other user-defined subsets**.
+
+The diagram below provides the recommended workflow and links directly to the documentation for each function.
+
+
 ```mermaid
 flowchart TD
 
