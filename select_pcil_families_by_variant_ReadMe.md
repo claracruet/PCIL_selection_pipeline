@@ -283,4 +283,4 @@ pcil_families$geno_pi
 pcil_families$pcil_summary
 ```
 
-[View `select_pcil_families_by_variant()` source](https://gist.githubusercontent.com/claracruet/7fb4425da272d985d747eb032550c80f/raw/fa264eaf3843f42abb46378eff9279842057ee1c/select_pcil_fam_by_variant_pangb.R)
+[View `select_pcil_families_by_variant()` source](https://gist.githubusercontent.com/claracruet/7fb4425da272d985d747eb032550c80f/raw/select_pcil_fam_by_variant_pangb.R)
