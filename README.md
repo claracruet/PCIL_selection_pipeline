@@ -54,11 +54,7 @@ REGION("Region")
 %% =========================================================
 
 PCV --> KNOW{"Do you know the <b>Chromosome</b> and <b>Position</b><br/>you want to target?"}
-
-KNOW -->|No| EXTRACT["Extract PCV from gene"]
-
-click EXTRACT "https://github.com/claracruet/PCIL_selection_pipeline/blob/main/PCV_from_gene_selection.md" "View PCV from gene selection guide"
-KNOW -->|Yes| TARGET("Target PCV")
+KNOW -->|No| EXTRACT["Extract PCV from gene<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/PCV_from_gene_selection.md'><b>R code and guide</b></a>"]
 
 EXTRACT --> ANN("<b>Extract annotations</b><br/><b>from gene with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>pg_query_db()</b></a>")
 
@@ -68,11 +64,11 @@ GENO --> CHOOSE{"Use information<br/>such as PCV <b>effect</b>,<br/><b>MAF</b> a
 
 CHOOSE --> TARGET
 
-TARGET --> FAMSTEP["Identify families and lines hypothesized to be<br/>segregating for the PCV based on parental genotypes"]
+TARGET --> FAMSTEP["Identify <b>families</b> and <b>lines</b> hypothesized to be segregating for the PCV based on<br/>parental genotypes<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_families_by_variant_ReadMe.md'><b>R code and guide</b></a>"]
 
 FAMSTEP --> FAMFUNC("Identify families and lines by PCV(s)<br/><b>select_pcil_families_by_variant()</b>")
 
-FAMFUNC --> PCPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the PCV [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]"]
+FAMFUNC --> PCPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the PCV [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_families_by_variant_ReadMe.md'><b>R code and guide</b></a>"]
 
 PCPOSSTEP --> PCDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
 
