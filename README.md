@@ -56,6 +56,8 @@ REGION("Region")
 PCV --> KNOW{"Do you know the <b>Chromosome</b> and <b>Position</b><br/>you want to target?"}
 
 KNOW -->|No| EXTRACT["Extract PCV from gene"]
+
+click EXTRACT "https://github.com/claracruet/PCIL_selection_pipeline/blob/main/PCV_from_gene_selection.md" "View PCV from gene selection guide"
 KNOW -->|Yes| TARGET("Target PCV")
 
 EXTRACT --> ANN("<b>Extract annotations</b><br/><b>from gene with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>pg_query_db()</b></a>")
