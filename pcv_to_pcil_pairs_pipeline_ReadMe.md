@@ -138,6 +138,8 @@ Check family representation:
 left_join(pcil_positives$pcil_positive,pcil_data$metadata, by = "SampleID") %>% 
   count(Region, Family)
 ```
+<img width="551" height="442" alt="image" src="https://github.com/user-attachments/assets/58d285ac-3e29-4347-83fd-63ea6808f000" />
+
 
 Inspect the selected PCIL (+):
 
@@ -217,7 +219,8 @@ Best PCIL (-) match:
 names(pcil_negatives)
 ```
 
-<img width="307" height="34" alt="image" src="https://github.com/user-attachments/assets/27aedda2-65be-4eaf-92f8-f6c2fc573389" />
+<img width="265" height="36" alt="image" src="https://github.com/user-attachments/assets/ac05747c-81db-46ba-a3a5-4e80702f4cb2" />
+
 
 ```
 # we have now a list of two
@@ -246,10 +249,11 @@ head(pcil_negatives$pairs_extended)
 source("https://gist.githubusercontent.com/claracruet/88850837f726cdc1a797993e93261847/raw/plot_pcil_pairs.R")
 
 # loading pcil pair plotting function
-plot_pcil_pairs_negatives<- plot_pcil_pairs(pcil_neg_sel = pcil_negatives_seed$pairs_extended,  # you must indicate if you want 'pair_best' or 'pairs_extended'
-                pcil_data = pcil_data, pcil_pos = pcil_positives
-                )
+plot_pcil_pairs_negatives<- plot_pcil_pairs(pcil_neg_sel = pcil_negatives$pairs_extended,  # you must indicate if you want 'pair_best' or 'pairs_extended'
+                                            pcil_data = pcil_data, pcil_pos = pcil_positives
+)
 names(plot_pcil_pairs_negatives)
+
 
 ```
 <img width="543" height="57" alt="image" src="https://github.com/user-attachments/assets/cad4eec8-2588-4d5f-b097-275e666682be" />
