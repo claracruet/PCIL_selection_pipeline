@@ -232,4 +232,4 @@ For users of the PCIL selection pipeline, these datasets are loaded automaticall
 
 The detailed generation and QC procedures for each dataset are documented separately so that the main PCIL selection guide can remain focused on how to use the data rather than how each genomic resource was generated.
 
-[View `load_pcil_data()` source](https://gist.githubusercontent.com/claracruet/b6ade06ffa38c1e6bb97c813621632ea/raw/3604e4db55aef3d90f86b78af4541bd0fb26cb32/load_pcil_data.R)
+[View `load_pcil_data()` source](https://gist.githubusercontent.com/claracruet/b6ade06ffa38c1e6bb97c813621632ea/raw/load_pcil_data.R)
