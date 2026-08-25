@@ -33,7 +33,7 @@ pcil_data <- load_pcil_data()
 For a position-based analysis, the input requires a target name (`Region`), chromosome (`Chr`), and genomic position (`pos`).
 
 ```r
-region_sandeep <- data.frame(
+region <- data.frame(
   Region = "SNP_Chr06_3939483",
   Chr = "Chr06",
   pos = 3939483
@@ -49,8 +49,8 @@ First, run the target without an additional window. In this example, this run is
 ```r
 pcil_pos_no_window <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos"
+  input = region,
+  type = "position"
 )
 ```
 
@@ -61,8 +61,8 @@ The target is then evaluated using progressively larger windows.
 ```r
 pcil_pos_best_available_1kb <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos",
+  input = region,
+  type = "position",
   window = 1000,
   sel = 3
 )
@@ -73,8 +73,8 @@ pcil_pos_best_available_1kb <- select_pcil_positive(
 ```r
 pcil_pos_best_available_5kb <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos",
+  input = region,
+  type = "position",
   window = 5000,
   sel = 3
 )
@@ -85,8 +85,8 @@ pcil_pos_best_available_5kb <- select_pcil_positive(
 ```r
 pcil_pos_best_available_10kb <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos",
+  input = region,
+  type = "position",
   window = 10000,
   sel = 3
 )
@@ -97,8 +97,8 @@ pcil_pos_best_available_10kb <- select_pcil_positive(
 ```r
 pcil_pos_best_available_25kb <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos",
+  input = region,
+  type = "position",
   window = 25000,
   sel = 3
 )
@@ -109,8 +109,8 @@ pcil_pos_best_available_25kb <- select_pcil_positive(
 ```r
 pcil_pos_best_available_50kb <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos",
+  input = region,
+  type = "position",
   window = 50000,
   sel = 3
 )
@@ -121,8 +121,8 @@ pcil_pos_best_available_50kb <- select_pcil_positive(
 ```r
 pcil_pos_best_available_100kb <- select_pcil_positive(
   pcil_data = pcil_data,
-  input = region_sandeep,
-  type = "pos",
+  input = region,
+  type = "position",
   window = 100000,
   sel = 3
 )
@@ -186,7 +186,8 @@ all_pcil_pos_plot <- plot_all_pcil_positive(
 
 all_pcil_pos_plot
 ```
-<img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/e97bed77-2d4d-432f-8a6e-d868b3982c53" />
+<img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/ad8d0ca7-167d-4af2-ae58-f000d5d63f2d" />
+
 
 
 The red target marker identifies the genomic position being fine mapped, while the horizontal segments represent the donor introgressions carried by the PCIL (+) lines. Lines with introgression boundaries close to the target are particularly informative because they can help define a smaller donor interval surrounding the focal position. The selected PCIL (+) lines can then be paired with genetically similar PCIL (-) controls using the standard `select_pcil_negative()` workflow.
