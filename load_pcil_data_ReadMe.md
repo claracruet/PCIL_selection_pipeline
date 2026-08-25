@@ -49,7 +49,7 @@ Each row represents one introgression block detected in an individual PCIL line.
 
 These blocks were reconstructed from DArTseq genotypes using the PCIL breeding design and parental genotype information.
 
-The introgression data are used to determine whether a PCIL line contains a donor segment that fully spans a gene, variant, or genomic region of interest. Introgression size and donor fraction are also used during PCIL (+) selection.
+The introgression data are used to determine whether a PCIL line contains a donor segment that fully spans a gene, variant, or genomic region of interest. Introgression size and donor fraction can additionally be used when ranking and selecting preferred PCIL (+) lines.
 
 **Used by:**
 
@@ -77,7 +77,7 @@ These values provide a measure of **recurrent-parent genome recovery**.
 
 A lower `total_Mb` indicates that less donor-derived genome remains across the PCIL line, while a lower `total_blocks` indicates that the remaining donor genome is distributed across fewer separate introgression segments.
 
-Lines with lower `total_Mb` and fewer `total_blocks` are generally preferred during PCIL selection.
+Lines with lower `total_Mb` and fewer `total_blocks` are generally preferred when ranking PCIL candidates, because they retain less donor-derived genome outside the target region.
 
 **Used by:**
 
