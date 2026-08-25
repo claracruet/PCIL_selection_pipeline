@@ -105,7 +105,7 @@ GNEGFUNC --> GNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='htt
 %% REGION BRANCH
 %% =========================================================
 
-REGION --> RPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the region [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Region_to_PCIL.md'><b>R code and guide</b></a>]"]
+REGION --> RPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the region [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Region_to_PCIL.md'><b>R code and guide</b></a>"]
 
 RPOSSTEP --> RDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
 
@@ -190,7 +190,7 @@ Multi-target analysis can also be used to identify **shared PCILs across targets
 ```mermaid
 flowchart TD
 
-TARGETS["<b>Multiple targets of the same type</b><br/>PCVs | Genes | Regions <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_inputs_Readme.md'><b>Guide for multi-target inputs for the pipeline</b></a> <br/><br/><br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_PCIL_gene_example.md'><b>R code and guide</b></a>"]
+TARGETS["<b>Multiple targets of the same type</b><br/>PCVs | Genes | Regions <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_inputs_Readme.md'><b>Guide for multi-target inputs for the pipeline</b></a> <br/><br/><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_PCIL_gene_example.md'><b>R code and guide</b></a>"]
 
 TARGETS --> POS["Run <b>select_pcil_positive()</b><br/>for all targets"]
 
