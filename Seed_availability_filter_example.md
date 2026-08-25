@@ -1,7 +1,24 @@
 # PCIL Selection Guide — Seed availability filter example
 
-This guide shows how to move from a **gene interest** to PCIL (+) and PCIL (-) lines. This pipeline will select all lines that have an introgression covering a gene despite the prescence or abscence of specific PCVs.
+This example shows how to restrict PCIL (+) and PCIL (-) selection to lines with **sufficient seed availability** using `global_available_ids`.
 
+The genomic target can still be a gene, position, or region. In this example, a gene is used as the target.
+
+```text
+CAL seed inventory
+ ↓
+Estimate usable seed
+ ↓
+Filter lots by required seed amount
+ ↓
+Map seed LOT.UID to genomic SampleIDs
+ ↓
+Use as global_available_ids
+ ↓
+Select PCIL (+)
+ ↓
+Select PCIL (-) using the same filter
+```
 
 
 # 1.  Load PCIL genomic data
@@ -53,8 +70,7 @@ head(seed_metadata)
 
 Here, CURRENT_LOT.UID is used to identify the seed lot representing the current generation of each PCIL line.
 If seed availability from a specific generation is needed,
-- CURRENT_LOT.UID can be replaced with the corresponding
-- generation-specific LOT.UID column (e.g., BC1F3_LOT.UID , BC1F4_LOT.UID ,BC1F5_LOT.UID,  etc.).
+CURRENT_LOT.UID is used here to represent the current seed lot for each PCIL line. If seed availability from a specific generation is needed, it can be replaced with the corresponding generation-specific LOT.UID column, such as BC1F3_LOT.UID, BC1F4_LOT.UID, or BC1F5_LOT.UID.
 
 ```r
 #  Filtering inventory to PCILs
@@ -66,9 +82,9 @@ dim(pcil_inventory)
 ```
 <img width="1271" height="272" alt="image" src="https://github.com/user-attachments/assets/e8da84c9-9f4e-4c39-afa7-b111e910bd56" />
 
-Seed inventory is recorded as seed weight (g), so seed number is estimated using a conservative thousand-kernel weight (TKW)of approximately 35 g:
+Seed inventory is recorded as seed weight (g), so seed number is estimated using a conservative thousand-kernel weight (TKW) of approximately 35 g, equivalent to approximately 28.6 seeds/g. An additional 100 seeds are reserved as breeding stock.
 
-``` text
+```text
 35 g / 1000 seeds ≈ 0.035 g/seed
 1000 seeds / 35 g ≈ 28.6 seeds/g
 
@@ -79,7 +95,7 @@ An additional 100 seeds are reserved as breeding stock and
 removed from the estimated number available for experiments.
 usable seeds = (seed weight × 28.6) - 100
 ```
-``` r
+```r
 # calculating usable seeds
 pcil_inventory$est_seed_number <-  (pcil_inventory$AMOUNT * 28.6) - 100
 
@@ -112,13 +128,13 @@ inventory_and_sampleid <- left_join(
 head(inventory_and_sampleid)
 
 # now i will extract my sample_ids to use
-sample_ids<- inventory_and_sampleid$sample_id
+sample_ids <- unique(na.omit(inventory_and_sampleid$sample_id))
 ```
 <img width="814" height="134" alt="image" src="https://github.com/user-attachments/assets/7a3ce8ee-1d55-4e05-b38d-c430036b26df" />
 
 ---
 
-# 3. Load PCIL (+) selection fucntion
+# 3. Load PCIL (+) selection function
 
 ```r
 # loading the pcil_pos function
@@ -127,7 +143,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 ```
 
 ---
-# 4. Prepare the region input
+# 4. Prepare the gene input
 
 
 ```r
@@ -157,7 +173,8 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines have an introgression in your region
+# pcil_positive contains all PCIL (+) lines with an introgression fully spanning the target gene within the
+# seed-available population
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -222,9 +239,10 @@ best_pcil_pos_plot
 ---
 
 
-# 8. Select PCIL (-)
+# 7. Select PCIL (-)
 
-Select PCIL (-) controls for the final PCIL (+) lines. IMPORTANT, you must also filter on the PCIL (-), the filtering options are not passed
+Select PCIL (-) controls for the final PCIL (+) lines. 
+Important: Population filters are not automatically carried from `select_pcil_positive()` into `select_pcil_negative()`. Apply the same `global_available_ids` restriction again during PCIL (-) selection.
 
 ```r
 # loading the PCIL (-)
@@ -237,7 +255,6 @@ pcil_negatives<- select_pcil_negative(pcil_data = pcil_data,
                                       regions =   pcil_positives$regions, 
                                       global_available_ids = sample_ids)
                                       
-) 
 
 ```
 <img width="554" height="428" alt="image" src="https://github.com/user-attachments/assets/493a1946-113e-44ee-b449-0a11249e4700" />
@@ -248,13 +265,13 @@ Using subset PCIL (+), best PCIL (+) from the previous step
 <img width="525" height="78" alt="image" src="https://github.com/user-attachments/assets/64928a2c-022a-42cd-8e07-ed502f629578" />
 
 
-This shows you the selection process for each PCIL (+), it shows the PCIL (+) , then the number of candidates within the same family, then the ones that have the closest IBS, then it shows you the reccomended and it's IBS distance. The lowest the number the more similar to the PCIL (+).
+The console output summarizes the PCIL (-) matching process for each PCIL (+). It reports the candidate population, whether same-family candidates are available, the closest candidates based on IBS distance, and the recommended PCIL (-) match. Lower IBS distance indicates greater genome-wide genetic similarity to the focal PCIL (+).
 
 
 Best PCIL (-) match:
 
 ```r
-# select_pcil_positive, returns a list
+# select_pcil_negative() returns a list
 names(pcil_negatives)
 ```
 <img width="287" height="39" alt="image" src="https://github.com/user-attachments/assets/baff55e0-c904-4242-a987-791af3158dd2" />
@@ -282,7 +299,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 9. Visualize PCIL (+) / PCIL (-) pairs
+# 8. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
@@ -298,7 +315,7 @@ names(plot_pcil_pairs_negatives)
 <img width="1268" height="34" alt="image" src="https://github.com/user-attachments/assets/143625cc-c878-4cee-949b-09aa74966a11" />
 
 
-You will obtain one plot per each variant and per each PCIL (+).
+You will obtain one plot for each target gene × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
