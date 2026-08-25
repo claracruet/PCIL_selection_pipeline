@@ -56,7 +56,8 @@ Search for PCIL (+) that have introgression for the gene
 pcil_positives<- select_pcil_positive(pcil_data = pcil_data, 
                                       input = input_pcil, 
                                       type = "gene",  
-                                      sel = 5)
+                                      sel = 5,
+                                      global_available_ids = sample_ids)
 
 # select_pcil_positive, returns a list
 names(pcil_positives)
