@@ -1,10 +1,24 @@
 # PCIL Selection Guide — Phenotype filter example
 
-This guide shows how to move from a **gene interest** to PCIL (+) and PCIL (-) lines. This pipeline will select all lines that have an introgression covering a gene despite the prescence or abscence of specific PCVs.
+This example shows how to restrict PCIL (+) and PCIL (-) selection to lines meeting a **phenotypic criterion** using `global_available_ids`.
 
+The genomic target can still be a gene, position, or region. In this example, a gene is used as the target.
 
+```text
+Phenotype data
+ ↓
+Filter lines by phenotype
+ ↓
+Map phenotype IDs to genomic SampleIDs
+ ↓
+Use as global_available_ids
+ ↓
+Select PCIL (+)
+ ↓
+Select PCIL (-) using the same filter
 
 # 1.  Load PCIL genomic data
+```
 
 ```r
 # we are going to first source the genomic infomation for the PCILs that we will be using
@@ -23,7 +37,7 @@ pcil_data <- load_pcil_data()
 phenotype <- read.csv("https://raw.githubusercontent.com/claracruet/PCIL_selection_pipeline/refs/heads/main/phenotype_example.csv")
 
 # Looking at the range for Days to flowering time
-range(phenotype$DTF)
+range(phenotype$DTF_BLUE)
 
 # Keeping lines that flowe between 60 and 70 days
 pheno_for_pcil <- phenotype[phenotype$DTF_BLUE %in% 60:70,]
@@ -54,7 +68,7 @@ sample_ids<- phenot_to_pcil_sample$sample_id
 ```
 ---
 
-# 3. Load PCIL (+) selection fucntion
+# 3. Load PCIL (+) selection function
 
 ```r
 # loading the pcil_pos function
@@ -63,7 +77,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 ```
 
 ---
-# 4. Prepare the region input
+# 4. Prepare the gene input
 
 ```r
 #creating selection 
@@ -74,7 +88,7 @@ input_pcil<- "Sobic.003G260300"
 
 # 5. Select PCIL (+)
 
-Search for PCIL (+) within families expected to have an introgression in the gene. 
+Identify PCIL (+) lines carrying an introgression that fully spans the target gene, restricting the search to lines that meet the selected phenotypic criterion.
 
 Here we will use the 'global_available_ids' to filter to those lines we identified having our phenotypes
 ```r
@@ -93,7 +107,8 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that have an introgression for your gene
+# pcil_positive contains all PCIL (+) lines with an introgression fully spanning the target gene within the
+# phenotype-filtered population
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -158,9 +173,11 @@ best_pcil_pos_plot
 ---
 
 
-# 8. Select PCIL (-)
+# 7. Select PCIL (-)
 
-Select PCIL (-) controls for the final PCIL (+) lines. IMPORTANT, you must also filter on the PCIL (-), the filtering options are not passed
+Select PCIL (-) controls for the final PCIL (+) lines. 
+
+Important: Population filters are not automatically carried from `select_pcil_positive()` into `select_pcil_negative()`. Apply the same global_available_ids restriction again during PCIL (-) selection.
 
 ```r
 # loading the PCIL (-)
@@ -172,8 +189,7 @@ pcil_negatives<- select_pcil_negative(pcil_data = pcil_data,
                                       pcil_positive_df = pcil_positives$best_lines, 
                                       regions =   pcil_positives$regions, 
                                       global_available_ids = sample_ids)
-                                      
-) 
+                                       
 
 ```
 <img width="554" height="428" alt="image" src="https://github.com/user-attachments/assets/493a1946-113e-44ee-b449-0a11249e4700" />
@@ -190,7 +206,7 @@ This shows you the selection process for each PCIL (+), it shows the PCIL (+) , 
 Best PCIL (-) match:
 
 ```r
-# select_pcil_positive, returns a list
+# select_pcil_negative() returns a list
 names(pcil_negatives)
 ```
 <img width="287" height="39" alt="image" src="https://github.com/user-attachments/assets/baff55e0-c904-4242-a987-791af3158dd2" />
@@ -218,7 +234,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 9. Visualize PCIL (+) / PCIL (-) pairs
+# 8. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
@@ -234,7 +250,7 @@ names(plot_pcil_pairs_negatives)
 <img width="1025" height="41" alt="image" src="https://github.com/user-attachments/assets/34d8ae9d-8bd8-4fff-b427-617036c5c949" />
 
 
-You will obtain one plot per each variant and per each PCIL (+).
+You will obtain one plot for each target gene × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
