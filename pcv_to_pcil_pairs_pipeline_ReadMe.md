@@ -76,7 +76,7 @@ pcil_data <- load_pcil_data()
 
 ---
 
-# 3. Load PCIL (+) selection fucntion
+# 3. Load PCIL (+) selection function
 
 ```r
 # loading the pcil_pos function
@@ -122,7 +122,8 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that are segregating among the families hypothesized to be segregating for your PCV
+# pcil_positive contains PCIL (+) candidates from families
+# hypothesized to segregate for the selected PCV
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -186,7 +187,7 @@ best_pcil_pos_plot
 ---
 
 
-# 8. Select PCIL (-)
+# 7. Select PCIL (-)
 
 Select PCIL (-) controls for the final PCIL (+) lines.
 
@@ -209,13 +210,13 @@ Initial candidates: Total number of PCIL (-)
 Using subset PCIL (+), best PCIL (+) from the previous step
 
 <img width="605" height="81" alt="image" src="https://github.com/user-attachments/assets/66969f89-e0c8-4b4a-b7f4-4eb26ee51bc5" />
-This shows you the selection process for each PCIL (+), it shows the PCIL (+) , then the number of candidates within the same family, then the ones that have the closest IBS, then it shows you the reccomended and it's IBS distance. The lowest the number the more similar to the PCIL (+).
+The console output summarizes the PCIL (-) selection process for each PCIL (+), including the number of candidates within the same family, the candidates retained based on IBS similarity, and the recommended PCIL (-) match with its IBS distance. Lower IBS distance indicates greater genetic similarity to the PCIL (+).
 
 
 Best PCIL (-) match:
 
 ```r
-# select_pcil_positive, returns a list
+# select_pcil_negative() returns a list
 names(pcil_negatives)
 ```
 
@@ -242,7 +243,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 9. Visualize PCIL (+) / PCIL (-) pairs
+# 8. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
@@ -257,7 +258,7 @@ names(plot_pcil_pairs_negatives)
 
 ```
 <img width="543" height="57" alt="image" src="https://github.com/user-attachments/assets/cad4eec8-2588-4d5f-b097-275e666682be" />
-You will obtain one plot per each variant and per each PCIL (+).
+One plot is generated for each target × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
