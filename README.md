@@ -145,7 +145,7 @@ flowchart TD
 
 FILTER["<b>Optional population filtering</b><br/>Restrict PCIL selection to a user-defined subset"]
 
-FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/>specific PCIL families"]
+FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/>specific PCIL families </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Family_filter_example.md'><b>R code and guide</b></a>"]
 
 FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion"]
 
