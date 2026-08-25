@@ -147,7 +147,7 @@ FILTER["<b>Optional population filtering</b><br/>Restrict PCIL selection to a us
 
 FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/>specific PCIL families </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Family_filter_example.md'><b>R code and guide</b></a>"]
 
-FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion"]
+FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Phenotype_filter_example.md'><b>R code and guide</b></a>"]
 
 FILTER --> SEED["<b>Filter by seed availability</b><br/>Select SampleIDs meeting the<br/>required seed amount"]
 
