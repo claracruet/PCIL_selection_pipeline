@@ -59,9 +59,9 @@ KNOW -->|No| EXTRACT["Extract PCV from gene<br/><a href='https://github.com/clar
 
 KNOW -->|Yes| TARGET("Target PCV")
 
-EXTRACT --> ANN("<b>Extract annotations</b><br/><b>from gene with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>pg_query_db()</b></a>")
+EXTRACT --> ANN("<b>Extract annotations</b><br/><b>from gene with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>fetch_table_region()</b></a>")
 
-ANN --> GENO("<b>Extract genotypes for variants in genes with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>pg_query_genotypes()</b></a>")
+ANN --> GENO("<b>Extract genotypes for variants in genes with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>fetch_genotypes_by_id()</b></a>")
 
 GENO --> CHOOSE{"Use information<br/>such as PCV <b>effect</b>,<br/><b>MAF</b> and <b>impact</b> to select<br/>the PCV to target"}
 
@@ -75,7 +75,7 @@ FAMFUNC --> PCPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines 
 
 PCPOSSTEP --> PCDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
 
-PCDATA --> PCPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>select_pcil_positive()</b></a><br/><i>• 'available_ids', required<br/>• 'sel', suggested<br/>• 'window', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
+PCDATA --> PCPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>select_pcil_positive()</b></a><br/><i>• 'available_ids', required for PCV workflow<br/>• 'sel', suggested<br/>• 'window', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
 
 PCPOSFUNC --> PCPOSPLOT("<b>Visualize PCIL (+)</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_all_pcil_positive()</b></a><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_best_pcil_positive()</b></a>")
 
@@ -88,7 +88,7 @@ PCNEGFUNC --> PCNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='h
 %% GENE BRANCH
 %% =========================================================
 
-GENE --> GPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the gene [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]</br><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/gene_to_pcil_branch.md'><b>R code and guide</b></a>"]
+GENE --> GPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the gene [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/gene_to_pcil_branch.md'><b>R code and guide</b></a>"]
 
 GPOSSTEP --> GDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
 
@@ -145,11 +145,11 @@ flowchart TD
 
 FILTER["<b>Optional population filtering</b><br/>Restrict PCIL selection to a user-defined subset"]
 
-FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/>specific PCIL families </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Family_filter_example.md'><b>R code and guide</b></a>"]
+FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/>specific PCIL families <br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Family_filter_example.md'><b>R code and guide</b></a>"]
 
-FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Phenotype_filter_example.md'><b>R code and guide</b></a>"]
+FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Phenotype_filter_example.md'><b>R code and guide</b></a>"]
 
-FILTER --> SEED["<b>Filter by seed availability</b><br/>Select SampleIDs meeting the<br/>required seed amount </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Seed_availability_filter_example.md'><b>R code and guide</b></a>"]
+FILTER --> SEED["<b>Filter by seed availability</b><br/>Select SampleIDs meeting the<br/>required seed amount <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Seed_availability_filter_example.md'><b>R code and guide</b></a>"]
 
 FAMILY --> IDS["Create vector of<br/><b>SampleIDs to keep</b>"]
 PHENO --> IDS
@@ -190,7 +190,7 @@ Multi-target analysis can also be used to identify **shared PCILs across targets
 ```mermaid
 flowchart TD
 
-TARGETS["<b>Multiple targets of the same type</b><br/>PCVs | Genes | Regions </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_inputs_Readme.md'><b>Guide for multi-target inputs for the pipeline</b></a> </br></br></br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_PCIL_gene_example.md'><b>R code and guide</b></a>"]
+TARGETS["<b>Multiple targets of the same type</b><br/>PCVs | Genes | Regions <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_inputs_Readme.md'><b>Guide for multi-target inputs for the pipeline</b></a> <br/><br/><br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_PCIL_gene_example.md'><b>R code and guide</b></a>"]
 
 TARGETS --> POS["Run <b>select_pcil_positive()</b><br/>for all targets"]
 
@@ -225,12 +225,12 @@ class BEST,PAIRS output;
 
 ### Fine mapping
 
-PCIL (+) lines with different introgression boundaries around a target can be used to identify informative material for fine mapping. The target can be evaluated using progressively larger windows to identify PCILs carrying different amounts of donor sequence around the region of interest. Selected PCIL (+) lines can then be paired with genetically similar PCIL (-) controls for phenotypic evaluation.
+PCIL (+) lines with different introgression boundaries around a target can be used to identify informative material for fine mapping. Comparing introgression boundaries identifies informative PCIL material; phenotypic evaluation of the corresponding PCIL (+)/PCIL (-) contrasts is required to support refinement of the candidate interval. The target can be evaluated using progressively larger windows to identify PCILs carrying different amounts of donor sequence around the region of interest. Selected PCIL (+) lines can then be paired with genetically similar PCIL (-) controls for phenotypic evaluation.
 
 ```mermaid
 flowchart TD
 
-TARGET["<b>Target genomic position to fine map</b> </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/fine_mapping_example.md'><b>Guide for fine mapping idea</b></a> "]
+TARGET["<b>Target genomic position to fine map</b> <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/fine_mapping_example.md'><b>Guide for fine mapping idea</b></a> "]
 
 TARGET --> WINDOWS["Run <b>select_pcil_positive()</b><br/>using different window sizes"]
 
