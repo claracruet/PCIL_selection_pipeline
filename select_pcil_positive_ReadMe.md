@@ -92,7 +92,7 @@ The primary datasets used by `select_pcil_positive()` are:
 - `inbreeding_coefficient`
 - `gene_regions`
 
-[View `load_pcil_data()` documentation](LINK_TO_LOAD_PCIL_DATA_README)
+[View `load_pcil_data()` documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md)
 
 ---
 
@@ -219,7 +219,7 @@ Region                  Chr      Start       End
 INDEL_Chr03_66131272    Chr03    66130272    66132272
 ```
 
-`window` defines the number of bp added upstream and downstream, is used only for position-based targets.
+`window` defines the number of bp added upstream and downstream of the target and is used only for position-based targets.
 
 ---
 
@@ -257,8 +257,7 @@ No coordinate conversion is required for this input type.
 
 # 2. Optional population filtering
 
-Population filtering is **not required** to identify PCIL (+). The goal of this filtering is to be able to restrict the population for specific hypothesis testing,
-operational reasons such as available phenotypes or seed availability. By default, the PCIL (+) selection is applied at the genomic level and therefore there can be samples
+Population filtering is **not required** to identify PCIL (+). The goal of this filtering is to restrict the population for a specific hypothesis or for operational considerations such as phenotype or seed availability. By default, the PCIL (+) selection is applied at the genomic level and therefore there can be samples
 for which we currently do not have seed availability.
 
 By default, `select_pcil_positive()` searches the complete PCIL introgression population contained in:
@@ -306,8 +305,7 @@ global_available_ids <- c(
 )
 ```
 
-This filter is applied across **all targets** being evaluated. This means that the PCIL positives will be found only among the supplied samples. If you are looking
-to do an experiment, the suggestion is that you always use the `global_available_ids` to filter samples for which we have seed.
+This filter is applied across **all targets** being evaluated. This means that the PCIL positives will be found only among the supplied samples. For experiments requiring seed, `global_available_ids` should generally be used to restrict selection to lines with sufficient seed availability.
 
 Examples of scenarios someone would like to restrict the PCIL (+) selection include:
 
@@ -560,7 +558,7 @@ This filter is only applied when **more than five candidates** remain at this st
 
 ---
 
-## 4) Genome-wide filters ranking
+## 4) Genome-wide ranking
 
 After filtering, the remaining PCIL (+) lines are ranked using three genome-wide criteria.
 
@@ -785,8 +783,7 @@ The number of rows returned per target is limited by `sel`, but fewer lines may 
 
 `select_pcil_positive()` is **independent of** `select_pcil_families_by_variant()`.
 
-For variant-based analyses, `select_pcil_families_by_variant()` should be runned before the `select_pcil_positive()` to restrict the search population 
-to families expected to segregate for the target variant.
+For PCV-based analyses, `select_pcil_families_by_variant()` should be run before `select_pcil_positive()` to restrict the search to families expected to segregate for the target variant.
 
 Conceptually:
 
