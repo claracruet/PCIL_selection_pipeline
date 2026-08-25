@@ -54,7 +54,7 @@ input_pcil<- data.frame(Region="QTL_Chr03", Chr="Chr03", Start=66940361, End=670
 
 # 5. Select PCIL (+)
 
-Search for PCIL (+) within families expected to segregate for the PCV:
+Search for PCIL (+) that have an introgression including our region
 
 ```r
 # running pcil_pos
