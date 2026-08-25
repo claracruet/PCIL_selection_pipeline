@@ -134,3 +134,49 @@ class EXTRACT,FAMSTEP,PCPOSSTEP,GPOSSTEP,RPOSSTEP step;
 class ANN,GENO,FAMFUNC,PCDATA,GDATA,RDATA,PCPOSFUNC,PCNEGFUNC,GPOSFUNC,GNEGFUNC,RPOSFUNC,RNEGFUNC function;
 class PCPOSPLOT,PCNEGPLOT,GPOSPLOT,GNEGPLOT,RPOSPLOT,RNEGPLOT plot;
 ```
+
+
+## Optional population filtering
+
+PCIL (+) and PCIL (−) selection can be restricted to a user-defined subset of the PCIL population. For example, lines can be filtered based on **family membership**, **phenotypic criteria**, or **seed availability**. The SampleIDs that meet the desired criterion are provided through `global_available_ids`, restricting the population considered during selection. The same population restriction should be applied to both PCIL (+) and PCIL (−) selection.
+
+```mermaid
+flowchart TD
+
+FILTER["<b>Optional population filtering</b><br/>Restrict PCIL selection to a user-defined subset"]
+
+FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/>specific PCIL families"]
+
+FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion"]
+
+FILTER --> SEED["<b>Filter by seed availability</b><br/>Select SampleIDs meeting the<br/>required seed amount"]
+
+FAMILY --> IDS["Create vector of<br/><b>SampleIDs to keep</b>"]
+PHENO --> IDS
+SEED --> IDS
+
+IDS --> GLOBAL["Use SampleIDs as<br/><b>global_available_ids</b>"]
+
+GLOBAL --> POS["Run <b>select_pcil_positive()</b><br/>within the filtered population"]
+
+POS --> NEG["Run <b>select_pcil_negative()</b><br/>using the same population restriction"]
+
+NEG --> PAIRS["Filtered<br/><b>PCIL (+) / PCIL (-) pairs</b>"]
+
+
+%% =========================================================
+%% STYLES
+%% =========================================================
+
+classDef start fill:#BFD3F2,stroke:#606060,stroke-width:1px,color:#000;
+classDef option fill:#E2F0D9,stroke:#606060,stroke-width:1px,color:#000;
+classDef input fill:#FFF2CC,stroke:#606060,stroke-width:1px,color:#000;
+classDef function fill:#D9E7EA,stroke:#606060,stroke-width:1px,color:#000;
+classDef output fill:#FCE4D6,stroke:#606060,stroke-width:1px,color:#000;
+
+class FILTER start;
+class FAMILY,PHENO,SEED option;
+class IDS,GLOBAL input;
+class POS,NEG function;
+class PAIRS output;
+```
