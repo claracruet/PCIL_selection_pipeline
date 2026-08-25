@@ -1,9 +1,9 @@
-# PCIL Selection Guide — Gene Branch
+# PCIL Selection Guide — Region Branch
 
-This guide shows how to move from a **gene interest** to PCIL (+) and PCIL (-) lines. This pipeline will select all lines that have an introgression covering a gene despite the prescence or abscence of specific PCVs.
+This guide shows how to move from a **genomic region of interest** to PCIL (+) and PCIL (-) lines. This branch identifies PCIL (+) lines carrying an introgression that fully spans the user-defined genomic region, and then identifies genetically similar PCIL (-) controls that do not carry an introgression spanning that region.
 
 ```text
-Target Gene
+Target Region
  ↓
 Select PCIL (+)
  ↓
@@ -30,7 +30,7 @@ pcil_data <- load_pcil_data()
 
 ---
 
-# 3. Load PCIL (+) selection fucntion
+# 2. Load PCIL (+) selection function
 
 ```r
 # loading the pcil_pos function
@@ -41,7 +41,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 [PCIL positive documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md)
 
 ---
-# 4. Prepare the region input
+# 3. Prepare the region input
 
 ```r
 #creating selection 
@@ -50,9 +50,9 @@ input_pcil<- data.frame(Region="QTL_Chr03", Chr="Chr03", Start=66940361, End=670
 ```
 ---
 
-# 5. Select PCIL (+)
+# 4. Select PCIL (+)
 
-Search for PCIL (+) that have an introgression including our region
+Identify PCIL (+) lines carrying an introgression that fully spans the target region.
 
 ```r
 # running pcil_pos
@@ -69,7 +69,7 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that have an introgression for your region
+# pcil_positive contains all PCIL (+) lines with an introgression fully spanning the target region
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -101,7 +101,7 @@ head(pcil_positives$best_lines)
 
 ---
 
-# 6. Visualize PCIL (+)
+# 5. Visualize PCIL (+)
 
 ### All PCIL (+)
 
@@ -134,7 +134,7 @@ best_pcil_pos_plot
 ---
 
 
-# 8. Select PCIL (-)
+# 6. Select PCIL (-)
 
 Select PCIL (-) controls for the final PCIL (+) lines.
 
@@ -157,14 +157,12 @@ Initial candidates: Total number of PCIL (-)
 Using subset PCIL (+), best PCIL (+) from the previous step
 <img width="533" height="79" alt="image" src="https://github.com/user-attachments/assets/fd8d83b8-6f79-4299-8943-43862a5fcdcd" />
 
-
-This shows you the selection process for each PCIL (+), it shows the PCIL (+) , then the number of candidates within the same family, then the ones that have the closest IBS, then it shows you the reccomended and it's IBS distance. The lowest the number the more similar to the PCIL (+).
-
+The console output summarizes the PCIL (-) matching process for each PCIL (+). It reports the candidate population, whether same-family candidates are available, the closest candidates based on IBS distance, and the recommended PCIL (-) match. Lower IBS distance indicates greater genome-wide genetic similarity to the focal PCIL (+).
 
 Best PCIL (-) match:
 
 ```r
-# select_pcil_positive, returns a list
+# select_pcil_negative() returns a list
 names(pcil_negatives)
 ```
 <img width="287" height="39" alt="image" src="https://github.com/user-attachments/assets/baff55e0-c904-4242-a987-791af3158dd2" />
@@ -192,7 +190,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 9. Visualize PCIL (+) / PCIL (-) pairs
+# 7. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
@@ -207,11 +205,11 @@ names(plot_pcil_pairs_negatives)
 ```
 <img width="1046" height="41" alt="image" src="https://github.com/user-attachments/assets/f6bf4ad2-c4da-4641-b8df-6aa2e07fb44f" />
 
-You will obtain one plot per each variant and per each PCIL (+).
+You will obtain one plot for each target region × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
-plot_pcil_pairs_negatives$Sobic.003G260300_GMS_MN2025_127047
+plot_pcil_pairs_negatives$QTL_Chr03_GMS_MN2025_127047
 ```
 <img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/41edf3b8-224c-4c98-98a2-2a047090a9d1" />
 
