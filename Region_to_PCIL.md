@@ -41,9 +41,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 [PCIL positive documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md)
 
 ---
-# 4. Prepare the PCV input
-
-Get the position of the selected PCV:
+# 4. Prepare the region input
 
 ```r
 #creating selection 
@@ -71,7 +69,7 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that are segregating among the families hypothesized to be segregating for your PCV
+# pcil_postive, has all of the lines that have an introgression for your region
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -149,7 +147,6 @@ pcil_negatives<- select_pcil_negative(pcil_data = pcil_data,
                                            n_neg = 3, 
                                            # any other information such as phenotypes for your final selection
                                            pcil_positive_df = pcil_positives$best_lines, 
-                                           # for your PCV
                                            regions =   pcil_positives$regions
 ) 
 
@@ -253,4 +250,3 @@ pcil_negatives$pairs_extended
 Alternative PCIL (-) matches
 ```
 
-The final PCIL (+)/PCIL (-) pairs can then be moved forward for **PCV validation and experimental testing**.
