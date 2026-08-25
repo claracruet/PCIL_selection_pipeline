@@ -106,7 +106,7 @@ For each selected variant, the function evaluates each recurrent parent represen
 
 The genotype of the recurrent parent is compared against the genotypes of the other PCIL parental accessions.
 
-Potential donors are defined as parental accessions that:
+For recurrent parents with a known homozygous genotype, potential donors are defined as parental accessions that:
 
 - have a non-missing genotype,
 - are not heterozygous, and
@@ -243,7 +243,7 @@ This distinction is important:
 
 ## Using the output for variant-specific PCIL selection
 
-The `pcil_summary` output can be used to create a variant-specific list of PCIL lines for downstream selection.
+The `pcil_summary` output provides the variant-specific PCIL population used to restrict downstream PCIL (+) and PCIL (−) selection.
 
 For example:
 
