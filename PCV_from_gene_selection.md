@@ -52,8 +52,8 @@ Retrieve their genotypes:
 
 ```r
 # Now we are going to extract the genotypic information to get the maf to assist in our decision
-# Extracting genotypes at high impact variants, we are usign pg_query_genotypes
-variant_geno<- fetch_genotypes_by_id(variant_ids = pg_ann_region_mod$variant_id, connect_db_mode = 'online')
+# # retrieve genotype information for the retained variants
+variant_geno<- panGenomeBreedr::fetch_genotypes_by_id(variant_ids = pg_ann_region_mod$variant_id, connect_db_mode = 'online')
 
 head(variant_geno[1:10,1:10])
 ```
@@ -64,7 +64,7 @@ Create a short variant summary to assist in the decision (joining annotations an
 ```r
 # we are going to create an object with the main information to assist our decision for PCV
 # Joining for a short summary
-pg_variant_summary<- left_join(pg_ann_region_mod[c("variant_id","annotation","impact","gene_name","variant_id")], 
+pg_variant_summary<- left_join(pg_ann_region_mod[c("variant_id","annotation","impact","gene_name")], 
                                variant_geno[c("variant_id","chrom","pos","ref","alt", "minor_allele","minor_allele_freq")],
  by=c("variant_id"))
 
@@ -76,4 +76,17 @@ head(pg_variant_summary[1:10,1:10])
 ```
 <img width="1742" height="256" alt="image" src="https://github.com/user-attachments/assets/10668097-5827-4d55-ba17-a751e5f3a34e" />
 
-# From here I am going to pursue variant "INDEL_Chr03_66131272"
+## Select the PCV
+
+Use the annotation, predicted impact, allele frequency, and other available information to select the PCV to pursue.
+
+In this example:
+
+```r
+# select the PCV to pursue
+selection <- c("INDEL_Chr03_66131272")
+```
+
+The selected PCV can now be passed to `select_pcil_families_by_variant()` to identify PCIL families and lines hypothesized to segregate for the variant based on parental genotypes.
+
+[Continue to PCV family and PCIL pair selection](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/pcv_to_pcil_pairs_pipeline_ReadMe.md)
