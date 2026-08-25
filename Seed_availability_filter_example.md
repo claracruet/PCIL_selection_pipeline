@@ -319,7 +319,7 @@ You will obtain one plot for each target gene × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
-plot_pcil_pairs_negatives$Sobic.003G260300_25ALM_BC1F3s1_0948
+plot_pcil_pairs_negatives$25ALM_BC1F3s1_1315
 ```
 <img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/2117ad61-cd57-457e-9640-6c289643098b" />
 
