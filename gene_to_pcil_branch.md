@@ -54,7 +54,7 @@ input_pcil<- "Sobic.003G260300"
 
 # 5. Select PCIL (+)
 
-Search for PCIL (+) within families expected to segregate for the PCV:
+Search for PCIL (+) with introgression incluiding our genes
 
 ```r
 # running pcil_pos
