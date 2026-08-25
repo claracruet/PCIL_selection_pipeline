@@ -180,3 +180,44 @@ class IDS,GLOBAL input;
 class POS,NEG function;
 class PAIRS output;
 ```
+
+## Multiple target selection
+
+The pipeline can evaluate **multiple targets of the same type** in a single analysis. Multiple PCVs, genes, or genomic regions can be supplied together, while each target is evaluated independently throughout PCIL (+) and PCIL (-) selection.
+
+Multi-target analysis can also be used to identify **shared PCILs across targets**. After identifying candidates independently for each target, SampleIDs represented across multiple targets can be used to restrict the population and prioritize PCIL (+) and PCIL (-) lines that are informative for more than one target.
+
+```mermaid
+flowchart TD
+
+TARGETS["<b>Multiple targets of the same type</b><br/>PCVs | Genes | Regions </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_inputs_Readme.md'><b>Guide for multi-target inputs for the pipeline</b></a> </br></br></br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_PCIL_gene_example.md'><b>R code and guide</b></a>"]
+
+TARGETS --> POS["Run <b>select_pcil_positive()</b><br/>for all targets"]
+
+POS --> INDEP["PCIL (+) identified<br/><b>independently for each target</b>"]
+
+INDEP --> SHARED["Identify SampleIDs that are<br/>PCIL (+) for <b>multiple targets</b>"]
+
+SHARED --> POS2["Re-run <b>select_pcil_positive()</b><br/>using shared SampleIDs"]
+
+POS2 --> BEST["Selected multi-target<br/><b>PCIL (+)</b>"]
+
+BEST --> NEG["Generate PCIL (-)<br/>candidate pool"]
+
+NEG --> SHAREDNEG["Identify PCIL (-) SampleIDs<br/>represented across <b>multiple targets</b>"]
+
+SHAREDNEG --> NEG2["Re-run <b>select_pcil_negative()</b><br/>using shared SampleIDs"]
+
+NEG2 --> PAIRS["Multi-target<br/><b>PCIL (+) / PCIL (-) pairs</b>"]
+
+
+classDef target fill:#BFD3F2,stroke:#606060,stroke-width:1px,color:#000;
+classDef step fill:#E2F0D9,stroke:#606060,stroke-width:1px,color:#000;
+classDef function fill:#D9E7EA,stroke:#606060,stroke-width:1px,color:#000;
+classDef output fill:#FCE4D6,stroke:#606060,stroke-width:1px,color:#000;
+
+class TARGETS target;
+class INDEP,SHARED,SHAREDNEG step;
+class POS,POS2,NEG,NEG2 function;
+class BEST,PAIRS output;
+```
