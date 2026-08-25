@@ -1,10 +1,37 @@
-## Multiple target selection edits in functions and how to do it!
+## Using multiple targets in the PCIL pipeline
 
-The pipeline supports the simultaneous evaluation of **multiple targets of the same type**. A single workflow can evaluate multiple PCVs, multiple genes, or multiple genomic regions.
+The pipeline supports the simultaneous evaluation of multiple targets of the same ***type**. A single run can evaluate multiple PCVs, multiple genes, or multiple genomic regions. Different target types should be analyzed in separate runs.
 
 Only **one target type can be used per run**. For example, multiple PCVs can be analyzed together, but PCVs and genes should be analyzed in separate runs.
 
 Each target is tracked independently through the pipeline using its `Region` identifier.
+
+```text
+Multiple targets of ONE type
+          ↓
+PCV | PCV | PCV
+or
+Gene | Gene | Gene
+or
+Region | Region | Region
+          ↓
+select_pcil_positive()
+          ↓
+PCIL (+) identified and ranked
+independently for each target
+          ↓
+select_pcil_negative()
+          ↓
+PCIL (-) matched independently
+for each Target × PCIL (+)
+          ↓
+Plotting functions
+          ↓
+Separate visualizations
+for each target
+```
+
+
 
 ### How multiple targets move through the pipeline
 
@@ -58,7 +85,7 @@ input_pcil <- data.frame(
 pcil_positives <- select_pcil_positive(
   pcil_data = pcil_data,
   input = input_pcil,
-  type = "pos",
+  type = "position",
   available_ids = results$pcil_summary[
     c("sample_id", "selection")
   ],
@@ -107,7 +134,7 @@ pcil_positives <- select_pcil_positive(
 )
 ```
 
-For all three target types, PCIL (+) identification and ranking are performed **independently for each target**.
+For all three target types, PCIL (+) identification is performed independently for each target. If `sel` is provided, ranking and preferred-line selection are also performed independently for each target.
 
 The output retains the target identity in:
 
@@ -190,7 +217,7 @@ Target × PCIL (+)
 
 combination.
 
-For PCV analyses using target-specific family restrictions, the same `available_ids` can be passed to PCIL (-) selection:
+For PCV analyses, `available_ids` preserves a target-specific set of eligible SampleIDs because the selection column is matched to the corresponding Region. Therefore, different PCVs can be evaluated within different hypothesized segregating populations in the same run.
 
 ```r
 pcil_negatives <- select_pcil_negative(
@@ -215,7 +242,8 @@ PCIL (+)/PCIL (-) pairs for all targets can be visualized in a single call:
 ```r
 pcil_pair_plots <- plot_pcil_pairs(
   pcil_data = pcil_data,
-  pcil_neg_sel = pcil_negatives$pairs_extended
+  pcil_neg_sel = pcil_negatives$pairs_extended,
+  pcil_pos = pcil_positives
 )
 ```
 
@@ -229,30 +257,8 @@ combination.
 
 ---
 
+Important: Multi-target analysis does not mean that the function searches for a single PCIL carrying all targets simultaneously. Each target is evaluated independently. Shared PCILs across targets can be identified afterward by comparing SampleIDs across the target-specific outputs.
+
 ### Multi-target workflow
 
-```text
-Multiple targets of ONE type
-          ↓
-PCV | PCV | PCV
-or
-Gene | Gene | Gene
-or
-Region | Region | Region
-          ↓
-select_pcil_positive()
-          ↓
-PCIL (+) identified and ranked
-independently for each target
-          ↓
-select_pcil_negative()
-          ↓
-PCIL (-) matched independently
-for each Target × PCIL (+)
-          ↓
-Plotting functions
-          ↓
-Separate visualizations
-for each target
-```
 
