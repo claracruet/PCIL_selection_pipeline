@@ -1,6 +1,6 @@
 # PCIL Selection Guide — Gene Branch
 
-This guide shows how to move from a **gene interest** to PCIL (+) and PCIL (-) lines. This pipeline will select all lines that have an introgression covering a gene despite the prescence or abscence of specific PCVs.
+This guide shows how to move from a ***gene*** of interest to PCIL (+) and PCIL (-) lines. This branch identifies PCIL (+) lines carrying an introgression that fully spans the target gene, regardless of the presence or absence of a specific putative causative variant (PCV), and then identifies genetically similar PCIL (-) controls that do not carry an introgression spanning the gene.
 
 ```text
 Target Gene
@@ -30,7 +30,7 @@ pcil_data <- load_pcil_data()
 
 ---
 
-# 3. Load PCIL (+) selection fucntion
+# 2. Load PCIL (+) selection fucntion
 
 ```r
 # loading the pcil_pos function
@@ -41,23 +41,22 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 [PCIL positive documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md)
 
 ---
-# 4. Prepare the PCV input
+# 3.  Prepare the gene input
 
-Get the position of the selected PCV:
+Define the gene of interest:
 
 ```r
-#creating selection 
+# Define the target gene
 input_pcil<- "Sobic.003G260300"
 
 ```
 ---
 
-# 5. Select PCIL (+)
+# 4. Select PCIL (+)
 
-Search for PCIL (+) with introgression incluiding our genes
+Identify PCIL (+) lines carrying an introgression that fully spans the target gene.
 
 ```r
-# running pcil_pos
 # running pcil_pos
 pcil_positives<- select_pcil_positive(pcil_data = pcil_data, 
                                       input = input_pcil, 
@@ -72,7 +71,7 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that are segregating among the families hypothesized to be segregating for your PCV
+# pcil_positive contains all PCIL (+) lines with an introgression fully spanning the target gene
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -104,7 +103,7 @@ head(pcil_positives$best_lines)
 
 ---
 
-# 6. Visualize PCIL (+)
+# 5. Visualize PCIL (+)
 
 ### All PCIL (+)
 
@@ -137,7 +136,7 @@ best_pcil_pos_plot
 ---
 
 
-# 8. Select PCIL (-)
+# 6. Select PCIL (-)
 
 Select PCIL (-) controls for the final PCIL (+) lines.
 
@@ -150,7 +149,6 @@ pcil_negatives<- select_pcil_negative(pcil_data = pcil_data,
                                            n_neg = 3, 
                                            # any other information such as phenotypes for your final selection
                                            pcil_positive_df = pcil_positives$best_lines, 
-                                           # for your PCV
                                            regions =   pcil_positives$regions
 ) 
 
@@ -162,7 +160,7 @@ Using subset PCIL (+), best PCIL (+) from the previous step
 
 <img width="526" height="74" alt="image" src="https://github.com/user-attachments/assets/dbab2aea-bd0f-4d57-abdc-f849be084c3e" />
 
-This shows you the selection process for each PCIL (+), it shows the PCIL (+) , then the number of candidates within the same family, then the ones that have the closest IBS, then it shows you the reccomended and it's IBS distance. The lowest the number the more similar to the PCIL (+).
+The console output summarizes the PCIL (-) matching process for each PCIL (+). It reports the candidate population, whether same-family candidates are available, the closest candidates based on IBS distance, and the recommended PCIL (-) match. Lower IBS distance indicates greater genome-wide genetic similarity to the focal PCIL (+).
 
 
 Best PCIL (-) match:
@@ -195,7 +193,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 9. Visualize PCIL (+) / PCIL (-) pairs
+# 7. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
@@ -210,7 +208,7 @@ names(plot_pcil_pairs_negatives)
 ```
 <img width="543" height="66" alt="image" src="https://github.com/user-attachments/assets/92eb1578-4f51-4981-b3c2-e9f72a1ac6a7" />
 
-You will obtain one plot per each variant and per each PCIL (+).
+You will obtain one plot for each target gene × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
@@ -254,4 +252,6 @@ pcil_negatives$pairs_extended
 Alternative PCIL (-) matches
 ```
 
-The final PCIL (+)/PCIL (-) pairs can then be moved forward for **PCV validation and experimental testing**.
+The final PCIL (+)/PCIL (-) pairs can then be moved forward for ***gene-level** hypothesis testing and experimental validation.
+
+Note: This branch does not require prior identification of a specific PCV. PCIL (+) status is based on whether the donor introgression spans the target gene. If a specific causal variant is being targeted instead, use the PCV branch.
