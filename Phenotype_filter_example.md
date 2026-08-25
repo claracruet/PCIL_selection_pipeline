@@ -76,15 +76,16 @@ input_pcil<- "Sobic.003G260300"
 
 # 5. Select PCIL (+)
 
-Search for PCIL (+) within families expected to segregate for the PCV:
+Search for PCIL (+) within families expected to have an introgression in the gene. 
 
+Here we will use the 'global_available_ids' to filter to those lines we identified having our phenotypes
 ```r
-# running pcil_pos
 # running pcil_pos
 pcil_positives<- select_pcil_positive(pcil_data = pcil_data, 
                                       input = input_pcil, 
                                       type = "gene",  
-                                      sel = 5)
+                                      sel = 5, 
+                                      global_available_ids = sample_ids)
 
 # select_pcil_positive, returns a list
 names(pcil_positives)
