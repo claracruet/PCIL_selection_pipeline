@@ -143,11 +143,11 @@ Search for PCIL (+) with introgression for your region
 
 ```r
 # running pcil_pos
-# running pcil_pos
 pcil_positives<- select_pcil_positive(pcil_data = pcil_data, 
                                       input = input_pcil, 
                                       type = "gene",  
-                                      sel = 5)
+                                      sel = 5, 
+                                      global_available_ids = sample_ids)
 
 # select_pcil_positive, returns a list
 names(pcil_positives)
@@ -275,7 +275,7 @@ Additional ranked PCIL (-) candidates:
 # 'pairs_extended', provides the top ranked PCIL (-) for the 'n_neg' you provided.
 head(pcil_negatives$pairs_extended)
 ```
-<img width="1090" height="238" alt="image" src="https://github.com/user-attachments/assets/77e09f60-96e8-4327-8a76-3d9869def2d9" />
+<img width="1157" height="135" alt="image" src="https://github.com/user-attachments/assets/61926a50-ead9-480e-96cc-a6dd209c7bad" />
 
 
 [PCIL (-) selection documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md)
@@ -295,7 +295,7 @@ plot_pcil_pairs_negatives<- plot_pcil_pairs(pcil_neg_sel = pcil_negatives$pairs_
 names(plot_pcil_pairs_negatives)
 
 ```
-<img width="1025" height="41" alt="image" src="https://github.com/user-attachments/assets/34d8ae9d-8bd8-4fff-b427-617036c5c949" />
+<img width="1268" height="34" alt="image" src="https://github.com/user-attachments/assets/143625cc-c878-4cee-949b-09aa74966a11" />
 
 
 You will obtain one plot per each variant and per each PCIL (+).
@@ -304,7 +304,7 @@ You will obtain one plot per each variant and per each PCIL (+).
 # Plotting my number one ranked PCIL (+)
 plot_pcil_pairs_negatives$Sobic.003G260300_25ALM_BC1F3s1_0948
 ```
-<img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/d2921b23-3cd4-4eea-b631-4e8e07b7216e" />
+<img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/2117ad61-cd57-457e-9640-6c289643098b" />
 
 
 Use:
