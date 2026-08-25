@@ -16,9 +16,9 @@ Use as global_available_ids
 Select PCIL (+)
  ↓
 Select PCIL (-) using the same filter
+```
 
 # 1.  Load PCIL genomic data
-```
 
 ```r
 # we are going to first source the genomic infomation for the PCILs that we will be using
@@ -39,7 +39,7 @@ phenotype <- read.csv("https://raw.githubusercontent.com/claracruet/PCIL_selecti
 # Looking at the range for Days to flowering time
 range(phenotype$DTF_BLUE)
 
-# Keeping lines that flowe between 60 and 70 days
+# Keeping lines that flower between 60 and 70 days
 pheno_for_pcil <- phenotype[phenotype$DTF_BLUE %in% 60:70,]
 head(pheno_for_pcil)
 ```
@@ -56,15 +56,15 @@ seed_to_sample_list<- seed_metadata[seed_metadata$BC1F5_SEED_ID %in% pheno_for_p
 seed_to_sample_list<-seed_to_sample_list[c("BC1F5_SEED_ID", "sample_id")]
 
 # lets do a join
-phenot_to_pcil_sample<- left_join(pheno_for_pcil, seed_to_sample_list, by=c("SEED.ID"="BC1F5_SEED_ID"))
+pheno_to_pcil_sample<- left_join(pheno_for_pcil, seed_to_sample_list, by=c("SEED.ID"="BC1F5_SEED_ID"))
 
-head(phenot_to_pcil_sample)
+head(pheno_to_pcil_sample)
 ```
 <img width="557" height="126" alt="image" src="https://github.com/user-attachments/assets/8007c170-3f3f-4a34-8f72-847b84483aa6" />
 
 ```r
-# extracting lines 
-sample_ids<- phenot_to_pcil_sample$sample_id
+ # extract unique genomic SampleIDs associated with the phenotype filter
+sample_ids <- unique(na.omit(pheno_to_pcil_sample$sample_id))
 ```
 ---
 
@@ -90,7 +90,7 @@ input_pcil<- "Sobic.003G260300"
 
 Identify PCIL (+) lines carrying an introgression that fully spans the target gene, restricting the search to lines that meet the selected phenotypic criterion.
 
-Here we will use the 'global_available_ids' to filter to those lines we identified having our phenotypes
+Here we will use the `global_available_ids` to restrict the search to lines meeting the phenotype criterion.
 ```r
 # running pcil_pos
 pcil_positives<- select_pcil_positive(pcil_data = pcil_data, 
@@ -129,8 +129,8 @@ left_join(pcil_positives$pcil_positive,pcil_data$metadata, by = "SampleID") %>%
 Inspect the selected PCIL (+):
 
 ```r
-# best_lines, are the best lines recommended according to you "sel", in this case the top 5 lines for each region, if available.
-# the criteria for selection can be found here:
+# best_lines contains the preferred PCIL (+) lines selected
+# according to sel; here, up to 5 lines are returned for the target:
 head(pcil_positives$best_lines)
 ```
 <img width="1075" height="117" alt="image" src="https://github.com/user-attachments/assets/5798e11e-f455-47a2-a9af-1bb084608f4a" />
@@ -177,7 +177,7 @@ best_pcil_pos_plot
 
 Select PCIL (-) controls for the final PCIL (+) lines. 
 
-Important: Population filters are not automatically carried from `select_pcil_positive()` into `select_pcil_negative()`. Apply the same global_available_ids restriction again during PCIL (-) selection.
+Important: Population filters are not automatically carried from `select_pcil_positive()` into `select_pcil_negative()`. Apply the same `global_available_ids` restriction again during PCIL (-) selection.
 
 ```r
 # loading the PCIL (-)
@@ -200,7 +200,8 @@ Using subset PCIL (+), best PCIL (+) from the previous step
 <img width="525" height="78" alt="image" src="https://github.com/user-attachments/assets/64928a2c-022a-42cd-8e07-ed502f629578" />
 
 
-This shows you the selection process for each PCIL (+), it shows the PCIL (+) , then the number of candidates within the same family, then the ones that have the closest IBS, then it shows you the reccomended and it's IBS distance. The lowest the number the more similar to the PCIL (+).
+The console output summarizes the PCIL (-) matching process for each PCIL (+). It reports the candidate population, whether same-family candidates are available, the closest candidates based on IBS distance, and the recommended PCIL (-) match. Lower IBS distance indicates greater genome-wide genetic similarity to the focal PCIL (+).
+
 
 
 Best PCIL (-) match:
@@ -212,7 +213,7 @@ names(pcil_negatives)
 <img width="287" height="39" alt="image" src="https://github.com/user-attachments/assets/baff55e0-c904-4242-a987-791af3158dd2" />
 
 
-```
+```r
 # we have now a list of two
 # 'pairs_best', provides the number one PCIL (-) for each PCIL positive.
 head(pcil_negatives$pairs_best)
@@ -252,7 +253,7 @@ names(plot_pcil_pairs_negatives)
 
 You will obtain one plot for each target gene × PCIL (+) combination.
 
-```
+```r
 # Plotting my number one ranked PCIL (+)
 plot_pcil_pairs_negatives$Sobic.003G260300_25ALM_BC1F3s1_0948
 ```
