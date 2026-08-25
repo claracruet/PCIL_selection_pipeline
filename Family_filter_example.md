@@ -1,8 +1,20 @@
 # PCIL Selection Guide — Family filter example
 
-This guide shows how to move from a **gene interest** to PCIL (+) and PCIL (-) lines. This pipeline will select all lines that have an introgression covering a gene despite the prescence or abscence of specific PCVs.
+This example shows how to restrict PCIL (+) and PCIL (-) selection to lines from a **specific PCIL family** using `global_available_ids`.
 
+The genomic target can still be a gene, position, or region. In this example, a gene is used as the target.
 
+```text
+Choose family
+ ↓
+Extract SampleIDs
+ ↓
+Use as global_available_ids
+ ↓
+Select PCIL (+)
+ ↓
+Select PCIL (-) using the same filter
+```
 
 # 1.  Load PCIL genomic data
 
@@ -24,11 +36,11 @@ pcil_data <- load_pcil_data()
 family<-"IRAT204/SC1074"
 
 # extracting lines 
-sample_ids<- pcil_data$metadata[pcil_data$metadata$Family==family,]
+sample_ids <- pcil_data$metadata$SampleID[pcil_data$metadata$Family == family]
 ```
 ---
 
-# 3. Load PCIL (+) selection fucntion
+# 3. Load PCIL (+) selection function
 
 ```r
 # loading the pcil_pos function
@@ -37,7 +49,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 ```
 
 ---
-# 4. Prepare the region input
+# 4. Prepare the gene input
 
 ```r
 #creating selection 
@@ -48,7 +60,7 @@ input_pcil<- "Sobic.003G260300"
 
 # 5. Select PCIL (+)
 
-Search for PCIL (+) that have introgression for the gene
+Identify PCIL (+) lines carrying an introgression that fully spans the target gene.
 
 ```r
 # running pcil_pos
@@ -67,7 +79,7 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that have an introgression in your gene
+#pcil_positive, has all of the lines that have an introgression in your gene
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
@@ -132,9 +144,11 @@ best_pcil_pos_plot
 ---
 
 
-# 8. Select PCIL (-)
+# 7. Select PCIL (-)
 
-Select PCIL (-) controls for the final PCIL (+) lines. IMPORTANT, you must also filter on the PCIL (-), the filtering options are not passed
+Select PCIL (-) controls for the final PCIL (+) lines. 
+
+Important: Population filters are not automatically carried from `select_pcil_positive()` into `select_pcil_negative()`. Apply the same `global_available_ids` restriction again during PCIL (-) selection.
 
 ```r
 # loading the PCIL (-)
@@ -147,7 +161,6 @@ pcil_negatives<- select_pcil_negative(pcil_data = pcil_data,
                                       regions =   pcil_positives$regions, 
                                       global_available_ids = sample_ids)
                                       
-) 
 
 ```
 <img width="539" height="354" alt="image" src="https://github.com/user-attachments/assets/b90d4e3f-de11-4de6-abad-bd4502d49dd4" />
@@ -163,7 +176,7 @@ This shows you the selection process for each PCIL (+), it shows the PCIL (+) , 
 Best PCIL (-) match:
 
 ```r
-# select_pcil_positive, returns a list
+# select_pcil_negative() returns a list
 names(pcil_negatives)
 ```
 <img width="287" height="39" alt="image" src="https://github.com/user-attachments/assets/baff55e0-c904-4242-a987-791af3158dd2" />
@@ -190,7 +203,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 9. Visualize PCIL (+) / PCIL (-) pairs
+# 8. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
@@ -206,7 +219,7 @@ names(plot_pcil_pairs_negatives)
 <img width="1025" height="41" alt="image" src="https://github.com/user-attachments/assets/34d8ae9d-8bd8-4fff-b427-617036c5c949" />
 
 
-You will obtain one plot per each variant and per each PCIL (+).
+You will obtain one plot for each target gene × PCIL (+) combination.
 
 ```
 # Plotting my number one ranked PCIL (+)
