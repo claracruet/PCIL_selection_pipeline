@@ -2,7 +2,7 @@
 
 This example shows how `select_pcil_positive()` can be used to identify **PCIL (+) lines with informative introgression boundaries around a target genomic position**.
 
-The same position is evaluated using progressively larger windows. Increasing the `window` requires the PCIL (+) introgression to span a larger interval around the target, allowing lines with different introgression boundaries to be identified and compared.
+The same position is evaluated using progressively larger windows. Increasing the `window` progressively requires the PCIL (+) introgression to span a larger interval around the target. Comparing which lines remain PCIL (+) across increasing window sizes provides a simple way to examine differences in introgression boundaries around the focal position.
 
 In this example, the target is **SNP_Chr06_3939483** at **Chr06:3,939,483**, and PCIL (+) candidates are selected using **1 kb, 5 kb, 10 kb, 25 kb, 50 kb, and 100 kb windows**.
 
@@ -44,14 +44,13 @@ region_sandeep <- data.frame(
 
 ## Identify PCIL (+) at different window sizes
 
-First, run the target without an additional window. This provides the original target coordinates that will later be used when the PCIL (+) results from all windows are combined.
+First, run the target without an additional window. In this example, this run is used only to recover the original target coordinates in pcil_pos_no_window$regions. These coordinates are later assigned to the combined fine-mapping object so that the original focal position, rather than one of the expanded windows, is used for visualization.
 
 ```r
 pcil_pos_no_window <- select_pcil_positive(
   pcil_data = pcil_data,
   input = region_sandeep,
-  type = "pos",
-  sel = 1
+  type = "pos"
 )
 ```
 
@@ -65,7 +64,7 @@ pcil_pos_best_available_1kb <- select_pcil_positive(
   input = region_sandeep,
   type = "pos",
   window = 1000,
-  sel = 5
+  sel = 3
 )
 ```
 
@@ -129,7 +128,7 @@ pcil_pos_best_available_100kb <- select_pcil_positive(
 )
 ```
 
-As the window increases, PCIL (+) lines must carry a donor introgression spanning a progressively larger interval around the target. Different `sel` values can be used to retain the desired number of candidates at each window.
+As the window increases, PCIL (+) lines must carry a donor introgression spanning a progressively larger interval around the target. Different `sel` values can be used to retain the desired number of candidates at each window. Therefore, PCIL (+) lines retained only at smaller windows can be particularly useful for fine mapping because their introgression boundaries occur closer to the focal position. Lines retained across larger windows carry introgressions extending farther from the target.
 
 ---
 
@@ -190,8 +189,7 @@ all_pcil_pos_plot
 <img width="3110" height="1952" alt="image" src="https://github.com/user-attachments/assets/e97bed77-2d4d-432f-8a6e-d868b3982c53" />
 
 
-The red target boundary identifies the genomic position being fine mapped, while the horizontal segments represent the donor introgressions carried by the selected PCIL (+) lines.
-Lines with introgression boundaries close to the target can be particularly informative for narrowing the candidate interval. The selected PCIL (+) lines can then be paired with genetically similar PCIL (-) controls using the standard `select_pcil_negative()` workflow.
+The red target marker identifies the genomic position being fine mapped, while the horizontal segments represent the donor introgressions carried by the PCIL (+) lines. Lines with introgression boundaries close to the target are particularly informative because they can help define a smaller donor interval surrounding the focal position. The selected PCIL (+) lines can then be paired with genetically similar PCIL (-) controls using the standard `select_pcil_negative()` workflow.
 
 ---
 
