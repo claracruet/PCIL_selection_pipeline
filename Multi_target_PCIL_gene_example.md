@@ -2,11 +2,13 @@
 
 This example shows how to identify **PCIL (+) and PCIL (-) lines that can be used across multiple genomic targets**.
 
-The targets are first evaluated independently to identify the complete set of PCIL (+) candidates. Lines that contain introgressions spanning more than one target are then identified and used to restrict the population before ranking the preferred PCIL (+) lines.
+The targets are first evaluated independently to identify the complete set of PCIL (+) candidates. After the targets are evaluated independently, lines that are PCIL (+) for more than one target can optionally be identified and used to restrict the population before ranking preferred multi-target PCIL (+) lines.
 
 The same approach can be applied to PCIL (-) selection by first generating a broad set of candidate controls and then identifying PCIL (-) lines that can serve as controls across multiple targets.
 
 > **Note:** Multiple targets must be of the same `type`. For example, multiple genes can be analyzed together, but genes and regions should be evaluated in separate runs.
+
+Important: Multi-target selection does not require the same PCIL to be used for every target. Each target is first evaluated independently. The shared-line filtering shown here is an additional strategy for prioritizing PCILs that can be informative across multiple targets.
 
 ## Load the PCIL data
 
@@ -68,7 +70,7 @@ multi_target_summary_pos
 <img width="499" height="250" alt="image" src="https://github.com/user-attachments/assets/d29a7ee3-1e42-4d14-b1da-53ee7020e32f" />
 
 
-`n_targets` indicates the number of distinct targets covered by each PCIL (+), while `targets` identifies those targets.
+`n_targets` indicates the number of distinct targets for which each line was identified as PCIL (+).
 
 ### Select the best multi-target PCIL (+)
 
@@ -83,7 +85,7 @@ pcil_positives_multi <- select_pcil_positive(
   input = input_pcil,
   type = "gene",
   sel = 5,
-  global_available_ids = multi_target_summary_pos$SampleID
+  global_available_ids = unique(multi_target_summary_pos$SampleID)
 )
 
 names(pcil_positives_multi)
@@ -153,7 +155,7 @@ best_pcil_pos_plot
 <img width="1704" height="1049" alt="image" src="https://github.com/user-attachments/assets/09318da2-1bf2-4ccd-9349-d7846275790f" />
 <img width="1704" height="1049" alt="image" src="https://github.com/user-attachments/assets/91a01dba-b613-42d2-a81a-d8de157db253" />
 
-We can see that '25ALM_BC1F3s1_0948' is the best line for both genes!
+In this example, 25ALM_BC1F3s1_0948 is the highest-ranked PCIL (+) for both genes.
 
 # Multi-target PCIL (-) selection
 
@@ -178,7 +180,7 @@ pcil_negatives <- select_pcil_negative(
 )
 ```
 
-Here, `n_neg = 100` is used to generate a broad set of ranked PCIL (-) candidates for each PCIL (+) × target combination. This first run is used to identify negative lines that are candidates for more than one target rather than to make the final PCIL (-) selection.
+Here, `n_neg = 100` is used to generate a broad ranked PCIL (-) candidate pool for each target × PCIL (+) combination. This first run is used to identify negative lines that are candidates for more than one target rather than to make the final PCIL (-) selection.
 
 ### Identify PCIL (-) shared across targets
 
@@ -215,7 +217,7 @@ pcil_negatives_multi <- select_pcil_negative(
   pcil_positive_df = pcil_positives_multi$best_lines,
   regions = pcil_positives_multi$regions,
   n_neg = 3,
-  global_available_ids = multi_target_summary_neg$SampleID_Negative
+  global_available_ids = unique(multi_target_summary_neg$SampleID_Negative)
 )
 ```
 <img width="641" height="854" alt="image" src="https://github.com/user-attachments/assets/6d895c22-d69d-4d67-9e16-8bbf49891b2e" />
@@ -257,7 +259,7 @@ names(plot_pcil_pairs_negatives)
 
 Each plot represents a specific **target × PCIL (+)** combination. This makes it possible to inspect the same focal PCIL (+) independently for each target.
 
-As we saw, the '25ALM_BC1F3s1_0948' is the best for each target and we also have that '25ALM_BC1F3s1_0504' is the best for both genes.
+In this example, `25ALM_BC1F3s1_0948` is the highest-ranked PCIL (+) for both targets, while `25ALM_BC1F3s1_0504` is the highest-ranked shared PCIL (-) candidate for both genes.
 
 ```r
 plot_pcil_pairs_negatives$Sobic.003G260300_25ALM_BC1F3s1_0948
