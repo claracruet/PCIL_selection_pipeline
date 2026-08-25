@@ -37,9 +37,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 ```
 
 ---
-# 4. Prepare the PCV input
-
-Get the position of the selected PCV:
+# 4. Prepare the region input
 
 ```r
 #creating selection 
@@ -50,7 +48,7 @@ input_pcil<- "Sobic.003G260300"
 
 # 5. Select PCIL (+)
 
-Search for PCIL (+) within families expected to segregate for the PCV:
+Search for PCIL (+) that have introgression for the gene
 
 ```r
 # running pcil_pos
@@ -68,7 +66,7 @@ names(pcil_positives)
 Inspect all PCIL (+):
 
 ```r
-# pcil_postive, has all of the lines that are segregating among the families hypothesized to be segregating for your PCV
+# pcil_postive, has all of the lines that have an introgression in your gene
 head(pcil_positives$pcil_positive)
 
 # you can check how many you have by
