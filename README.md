@@ -221,3 +221,36 @@ class INDEP,SHARED,SHAREDNEG step;
 class POS,POS2,NEG,NEG2 function;
 class BEST,PAIRS output;
 ```
+
+
+### Fine mapping
+
+PCIL (+) lines with different introgression boundaries around a target can be used to identify informative material for fine mapping. The target can be evaluated using progressively larger windows to identify PCILs carrying different amounts of donor sequence around the region of interest. Selected PCIL (+) lines can then be paired with genetically similar PCIL (-) controls for phenotypic evaluation.
+
+```mermaid
+flowchart TD
+
+TARGET["<b>Target genomic position to fine map</b> </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/fine_mapping_example.md'><b>Guide for fine mapping idea</b></a> "]
+
+TARGET --> WINDOWS["Run <b>select_pcil_positive()</b><br/>using different window sizes"]
+
+WINDOWS --> POS["Identify PCIL (+) with different<br/><b>introgression boundaries</b>"]
+
+POS --> COMPARE["Compare and visualize<br/><b>PCIL (+) candidates</b>"]
+
+COMPARE --> INFORM["Select informative<br/><b>PCIL (+)</b>"]
+
+%% =========================================================
+%% STYLES
+%% =========================================================
+
+classDef target fill:#BFD3F2,stroke:#606060,stroke-width:1px,color:#000;
+classDef function fill:#D9E7EA,stroke:#606060,stroke-width:1px,color:#000;
+classDef step fill:#E2F0D9,stroke:#606060,stroke-width:1px,color:#000;
+classDef plot fill:#FCE4D6,stroke:#606060,stroke-width:1px,color:#000;
+
+class TARGET target;
+class WINDOWS,NEG function;
+class POS,INFORM,PHENO,REFINE step;
+class COMPARE plot;
+```
