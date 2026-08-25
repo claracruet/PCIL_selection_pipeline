@@ -177,7 +177,7 @@ global_available_ids <- c(
 
 This filter is applied across **all targets**.
 
-Only non-carriers present in `samples_to_keep` can be considered as PCIL (-) matches.
+Only non-carriers present in `global_available_ids` can be considered as PCIL (-) matches.
 
 This can be useful for operational or experimental restrictions such as:
 
@@ -587,7 +587,7 @@ To return several candidate negatives for each PCIL (+), provide:
 ```r
 n_neg > 1
 ```
-This will return the number requested  of PCIL (-) candidates per PCIL (+).
+This returns up to the requested number of PCIL (-) candidates per PCIL (+).
 
 Each retained candidate receives:
 
@@ -722,11 +722,10 @@ The extended output is useful when the user wants multiple genetically appropria
 
 # 8. Relationship to `select_pcil_positive()`
 
-`select_pcil_negative()` uses the same standardized genomic regions used during PCIL (+) selection. It can be run independently as long as the "region" is generated
-in the same way as required by `select_pcil_positive`. 
+`select_pcil_negative()` uses the same standardized target regions used during PCIL (+) selection. It can also be run independently, provided that `region` follows the required `Region | Chr | Start | End` format. When population restrictions such as seed or phenotype availability are used, the same `global_available_ids` and/or target-specific `available_ids` restrictions should generally be applied consistently to both PCIL (+) and PCIL (-) selection.
 
 The `select_pcil_negative` should be restricted by `available_ids` or `global_available_ids` in the same way than `select_pcil_postive`/
 ---
 
-[View `select_pcil_negative()` source](https://gist.githubusercontent.com/claracruet/3f758a2f7d74a7d2f8278309b9500f67/raw/7d3da56452e8b338524d18a444066ff758202a57/select_pcil_negative.R)
+[View `select_pcil_negative()` source](https://gist.githubusercontent.com/claracruet/3f758a2f7d74a7d2f8278309b9500f67/raw/select_pcil_negative.R)
 
