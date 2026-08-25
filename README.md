@@ -149,7 +149,7 @@ FILTER --> FAMILY["<b>Filter by family</b><br/>Select SampleIDs belonging to<br/
 
 FILTER --> PHENO["<b>Filter by phenotype</b><br/>Select SampleIDs meeting a<br/>phenotypic criterion </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Phenotype_filter_example.md'><b>R code and guide</b></a>"]
 
-FILTER --> SEED["<b>Filter by seed availability</b><br/>Select SampleIDs meeting the<br/>required seed amount"]
+FILTER --> SEED["<b>Filter by seed availability</b><br/>Select SampleIDs meeting the<br/>required seed amount </br> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Seed_availability_filter_example.md'><b>R code and guide</b></a>"]"]
 
 FAMILY --> IDS["Create vector of<br/><b>SampleIDs to keep</b>"]
 PHENO --> IDS
