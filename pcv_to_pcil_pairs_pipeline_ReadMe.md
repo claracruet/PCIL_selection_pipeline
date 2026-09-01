@@ -1,4 +1,4 @@
-# PCIL Selection Guide — Gene (PCV) Branch 
+# PCIL Selection Guide — Gene (PCV) Branch
 
 This guide shows how to move from a **PCV of interest** to PCIL (+) and PCIL (-) lines. If you have not identified a PCV yet and you have a candidate gene, please refer to the [PCV_from_gene_selection.md](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/PCV_from_gene_selection.md)
 
