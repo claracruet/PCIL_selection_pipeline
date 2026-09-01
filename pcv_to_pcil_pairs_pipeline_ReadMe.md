@@ -223,7 +223,7 @@ names(pcil_negatives)
 <img width="265" height="36" alt="image" src="https://github.com/user-attachments/assets/ac05747c-81db-46ba-a3a5-4e80702f4cb2" />
 
 
-```
+```r
 # we have now a list of two
 # 'pairs_best', provides the number one PCIL (-) for each PCIL positive.
 head(pcil_negatives$pairs_best)
@@ -260,7 +260,7 @@ names(plot_pcil_pairs_negatives)
 <img width="543" height="57" alt="image" src="https://github.com/user-attachments/assets/cad4eec8-2588-4d5f-b097-275e666682be" />
 One plot is generated for each target × PCIL (+) combination.
 
-```
+```r
 # Plotting my number one ranked PCIL (+)
 plot_pcil_pairs_negatives$INDEL_Chr03_66131272_GMS_MN2025_125057
 ```
