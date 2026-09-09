@@ -74,7 +74,7 @@ pg_variant_summary<- unique(pg_variant_summary)
 # looking at our result
 head(pg_variant_summary[1:10,1:10])
 ```
-<img width="1742" height="256" alt="image" src="https://github.com/user-attachments/assets/10668097-5827-4d55-ba17-a751e5f3a34e" />
+<img width="1041" height="153" alt="image" src="https://github.com/user-attachments/assets/cdba997d-5cb5-4900-9b6e-05afa77e1b18" />
 
 ## Select the PCV
 
