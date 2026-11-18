@@ -53,8 +53,8 @@ The introgression data are used to determine whether a PCIL line contains a dono
 
 **Used by:**
 
-* `select_pcil_positive()`
-* `select_pcil_negative()`
+* `panGenomeBreedr::fetch_pcil_positive()`
+* `panGenomeBreedr::fetch_pcil_negative()`
 * PCIL plotting functions
 
 [Detailed introgression-mapping pipeline](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Gaia/Introgression_Mapping_PCILs)
@@ -92,14 +92,14 @@ Lines with lower `total_Mb` and fewer `total_blocks` are generally preferred whe
 
 Contains the PCIL breeding structure associated with each genomic SampleID.
 
-The original PCIL metadata contain additional pedigree and breeding information. `load_pcil_data()` retains the information required for downstream PCIL selection and combines the clan and family identifiers into a single family field.
+The original PCIL metadata contain additional pedigree and breeding information. `fetch_pcil_data()` retains the information required for downstream PCIL selection and combines the clan and family identifiers into a single family field.
 
 | Column     | Description                                                                                                                           |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `SampleID` | Unique identifier for the PCIL line and the key used to connect metadata with the genomic datasets.                                   |
 | `Family`   | Combined PCIL family identifier represented as `clan/family`. This identifies the breeding background associated with each PCIL line. |
 
-Within `load_pcil_data()`, the family identifier is generated as:
+Within `fetch_pcil_data()`, the family identifier is generated as:
 
 ```r
 Family <- paste(clan, family, sep = "/")
@@ -119,7 +119,7 @@ This information is particularly important during PCIL (−) selection, where ca
 
 Contains the genome-wide inbreeding coefficient (`F`) for each PCIL line.
 
-`F` was calculated from the merged PCIL DArTseq genotype dataset using PLINK. The original PLINK output contains several heterozygosity statistics, but `load_pcil_data()` retains the two columns required by the PCIL selection pipeline.
+`F` was calculated from the merged PCIL DArTseq genotype dataset using PLINK. The original PLINK output contains several heterozygosity statistics, but `fetch_pcil_data()` retains the two columns required by the PCIL selection pipeline.
 
 | Column     | Description                                                                                                                                                                     |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -132,8 +132,8 @@ Higher `F` values are preferred when other genomic characteristics are comparabl
 
 **Used by:**
 
-* `select_pcil_positive()`
-* `select_pcil_negative()`
+* `panGenomeBreedr::fetch_pcil_positive()`
+* `panGenomeBreedr::fetch_pcil_negative()`
 
 [Inbreeding calculation workflow](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Clara/PCIL_Selection_Script/Development_files)
 
@@ -177,7 +177,7 @@ The IBS matrix is primarily used during PCIL (−) selection to identify negativ
 
 **Used by:**
 
-* `select_pcil_negative()`
+* `panGenomeBreedr::fetch_pcil_negative()`
 
 [IBS calculation workflow](https://github.com/CropAdaptationLab/Lab-Notebooks/tree/62f4389149293c69dd295452915ea30990e2bcc4/members/Clara/PCIL_Selection_Script/Development_files)
 
@@ -209,12 +209,12 @@ End
 When:
 
 ```r
-select_pcil_positive(
+panGenomeBreedr::fetch_pcil_positive(
   type = "gene"
 )
 ```
 
-is used, `select_pcil_positive()` searches `gene_regions` for the requested `GeneID` and internally converts the gene into the standardized format:
+is used, `fetch_pcil_positive()` searches `gene_regions` for the requested `GeneID` and internally converts the gene into the standardized format:
 
 ```text
 Region | Chr | Start | End
@@ -224,11 +224,11 @@ This allows users to provide gene IDs directly rather than manually supplying ge
 
 **Used by:**
 
-* `select_pcil_positive(type = "gene")`
+* `panGenomeBreedr::fetch_pcil_positive(type = "gene")`
 
 ---
 
-For users of the PCIL selection pipeline, these datasets are loaded automatically through `load_pcil_data()`.
+For users of the PCIL selection pipeline, these datasets are loaded automatically through `fetch_pcil_data()`.
 
 The detailed generation and QC procedures for each dataset are documented separately so that the main PCIL selection guide can remain focused on how to use the data rather than how each genomic resource was generated.
 
