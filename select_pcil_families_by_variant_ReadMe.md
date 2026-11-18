@@ -1,18 +1,21 @@
 # PCIL Family Selection by Variant
 
 `fetch_pcil_families_by_variant()` identifies PCIL families expected to segregate for one or more selected variants.
-You can find the function documentation [here.](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_families_by_variant.html)
+
+
+**Documentation:**
+- [Scientific explanation and selection logic](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_families_by_variant_ReadMe.md)
+- [panGenomeBreedr function reference](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_families_by_variant.html)
 
 The function uses parental genotypes together with the PCIL breeding design to determine which donor × recurrent-parent combinations are informative for each variant. The resulting set of PCIL families can then be used to restrict downstream PCIL (+) searches to families in which the selected variant is expected to segregate.
 
-The function is run using:
+The function is called using:
 
 ```r
-fetch_pcil_families_by_variant(
-  con = NULL,
-  selection,
-  pcil_data,
-  connect_db_mode = c("local", "online")
+pcil_families <- panGenomeBreedr::fetch_pcil_families_by_variant(
+  selection = selection,
+  pcil_data = pcil_data,
+  connect_db_mode = "online"
 )
 ```
 
@@ -57,7 +60,7 @@ Each variant is evaluated independently. Therefore, different variants can resul
 
 ### `pcil_data`
 
-'pcil_data' contains the PCIL metadata. It can be gather by using the 'fetch_pcil_data()'. Documentation can be found [here.](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_data.html). You can find details on the contents of the metadata [here.](https://github.com/claracruet/PCIL_selection_pipeline/blob/3d80685dd4626b02a482f9cbf860c1669c3b6463/load_pcil_data_ReadMe.md)
+`pcil_data` contains the PCIL genomic and metadata resources. It can be obtained using `panGenomeBreedr::fetch_pcil_data()`. Function documentation can be found [here](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_data.html). Additional details on the contents of `pcil_data` can be found [here](https://github.com/claracruet/PCIL_selection_pipeline/blob/3d80685dd4626b02a482f9cbf860c1669c3b6463/load_pcil_data_ReadMe.md).
 
 ---
 
