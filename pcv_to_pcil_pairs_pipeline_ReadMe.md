@@ -18,9 +18,12 @@ Visualize PCIL (+) / PCIL (-) pairs
 
 # 1. Load PCIL data from pangenomebreeder
 ```r
+# we are going to first source the genomic infomation for the PCILs that we will be using
 # Loading PCIL dataset
 panGenomeBreedr::fetch_pcil_data(connect_db_mode = 'online')->pcil_data
 ```
+[PCIL data documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md)
+
 
 # 2. Identify PCIL families segregating for the PCV
 
