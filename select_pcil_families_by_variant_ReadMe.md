@@ -1,14 +1,18 @@
 # PCIL Family Selection by Variant
 
-`select_pcil_families_by_variant()` identifies PCIL families expected to segregate for one or more selected variants.
+`fetch_pcil_families_by_variant()` identifies PCIL families expected to segregate for one or more selected variants.
+You can find the function documentation [here.](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_families_by_variant.html)
 
 The function uses parental genotypes together with the PCIL breeding design to determine which donor × recurrent-parent combinations are informative for each variant. The resulting set of PCIL families can then be used to restrict downstream PCIL (+) searches to families in which the selected variant is expected to segregate.
 
 The function is run using:
 
 ```r
-pcil_families <- select_pcil_families_by_variant(
-  selection = selection
+fetch_pcil_families_by_variant(
+  con = NULL,
+  selection,
+  pcil_data,
+  connect_db_mode = c("local", "online")
 )
 ```
 
@@ -51,54 +55,12 @@ Each variant is evaluated independently. Therefore, different variants can resul
 
 ---
 
-### `metadata_pcil_current`
+### `pcil_data`
 
-Location of the current PCIL metadata file.
-
-By default:
-
-```r
-metadata_pcil_current =
-  "https://github.com/claracruet/File_sharing/releases/download/pcil_metadata/metadata_picls_summer2026.txt"
-```
-
-The metadata describe the PCIL breeding structure and provide the recurrent- and donor-parent library identifiers required to connect parental genotypes with individual PCIL families.
-
-The function uses:
-
-- `clan_rs_Lib` to identify recurrent-parent libraries
-- `fam_rs_Lib` to identify family/donor-parent libraries
-
-These parental libraries are used to retrieve genotype information for the selected variants.
+'pcil_data' contains the PCIL metadata. It can be gather by using the 'fetch_pcil_data()'. Documentation can be found [here.](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_data.html). You can find details on the contents of the metadata [here.](https://github.com/claracruet/PCIL_selection_pipeline/blob/3d80685dd4626b02a482f9cbf860c1669c3b6463/load_pcil_data_ReadMe.md)
 
 ---
 
-## Parental genotype retrieval
-
-The function identifies all parental libraries represented in the current PCIL population and retrieves their genotypes at the variants provided in `selection`.
-
-Variant genotypes are obtained using:
-
-```r
-variant_geno<-panGenomeBreedr::fetch_genotypes_by_id(
-  variant_ids=selection,
-  meta_data=c("variant_id","chrom","pos","ref","alt","variant_type"), 
-      connect_db_mode = "online"
-)
-```
-
-The raw genotype calls are converted into interpretable genotype classes:
-
-| Genotype | Classification |
-| -------- | -------------- |
-| `0\|0` | `Reference` |
-| `1\|1` | `Alternate` |
-| `0\|1` or `1\|0` | `Heterozygous` |
-| `./.` | Missing (`NA`) |
-
-The resulting genotype information is then connected to the parental accession metadata.
-
----
 
 ## Identification of potentially segregating families
 
@@ -214,17 +176,17 @@ This output defines the individual PCIL lines belonging to the families that are
 
 ## Relationship to PCIL (+) selection
 
-`select_pcil_families_by_variant()` and `select_pcil_positive()` answer two different questions.
+`panGenomeBreedr::fetch_pcil_families_by_variant()` and `panGenomeBreedr::fetch_pcil_positive()` answer two different questions.
 
 ```text
-select_pcil_families_by_variant()
+panGenomeBreedr::fetch_pcil_families_by_variant()
               ↓
 Which PCIL families are expected
 to segregate for this variant?
               ↓
        Candidate population
               ↓
-select_pcil_positive()
+panGenomeBreedr::fetch_pcil_positive()
               ↓
 Which individual PCIL lines contain
 a donor introgression spanning
@@ -269,8 +231,10 @@ selection <- c(
 )
 
 # Identify PCIL families expected to segregate
-pcil_families <- select_pcil_families_by_variant(
-  selection = selection
+fetch_pcil_families_by_variant(
+  selection,
+  pcil_data,
+  connect_db_mode ="online"
 )
 
 # View family-level summary
@@ -283,4 +247,4 @@ pcil_families$geno_pi
 pcil_families$pcil_summary
 ```
 
-[View `select_pcil_families_by_variant()` source](https://gist.githubusercontent.com/claracruet/7fb4425da272d985d747eb032550c80f/raw/select_pcil_fam_by_variant_pangb.R)
+[View `select_pcil_families_by_variant()` source](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_families_by_variant.html)
