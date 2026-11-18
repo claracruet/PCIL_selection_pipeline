@@ -59,9 +59,9 @@ KNOW -->|No| EXTRACT["Extract PCV from gene<br/><a href='https://github.com/clar
 
 KNOW -->|Yes| TARGET("Target PCV")
 
-EXTRACT --> ANN("<b>Extract annotations</b><br/><b>from gene with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>fetch_table_region()</b></a>")
+EXTRACT --> ANN("<b>Extract annotations</b><br/><b>from gene with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>panGenomeBreedr::fetch_table_region()</b></a>")
 
-ANN --> GENO("<b>Extract genotypes for variants in genes with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>fetch_genotypes_by_id()</b></a>")
+ANN --> GENO("<b>Extract genotypes for variants in genes with:</b><br/><a href='https://awkena.github.io/panGenomeBreedr/articles/panGenomeBreedr_Workflows.html'><b>panGenomeBreedr::fetch_genotypes_by_id()</b></a>")
 
 GENO --> CHOOSE{"Use information<br/>such as PCV <b>effect</b>,<br/><b>MAF</b> and <b>impact</b> to select<br/>the PCV to target"}
 
@@ -73,13 +73,13 @@ FAMSTEP --> FAMFUNC("<b>Identify families and lines by PCV(s)</b><br/><a href='h
 
 FAMFUNC --> PCPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the PCV [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/pcv_to_pcil_pairs_pipeline_ReadMe.md'><b>R code and guide</b></a>"]
 
-PCPOSSTEP --> PCDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
+PCPOSSTEP --> PCDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_data()</b></a>")
 
-PCDATA --> PCPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>select_pcil_positive()</b></a><br/><i>• 'available_ids', required for PCV workflow<br/>• 'sel', suggested<br/>• 'window', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
+PCDATA --> PCPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_positive()</b></a><br/><i>• 'available_ids', required for PCV workflow<br/>• 'sel', suggested<br/>• 'window', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
 
 PCPOSFUNC --> PCPOSPLOT("<b>Visualize PCIL (+)</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_all_pcil_positive()</b></a><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_best_pcil_positive()</b></a>")
 
-PCPOSPLOT --> PCNEGFUNC("<b>PCIL (-) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md'><b>select_pcil_negative()</b></a><br/><i>• 'available_ids', required<br/>• 'global_available_ids', suggested for seed availability</i>")
+PCPOSPLOT --> PCNEGFUNC("<b>PCIL (-) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_negative()</b></a><br/><i>• 'available_ids', required<br/>• 'global_available_ids', suggested for seed availability</i>")
 
 PCNEGFUNC --> PCNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_pcil_pairs()</b></a>")
 
@@ -90,13 +90,13 @@ PCNEGFUNC --> PCNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='h
 
 GENE --> GPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the gene [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/gene_to_pcil_branch.md'><b>R code and guide</b></a>"]
 
-GPOSSTEP --> GDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
+GPOSSTEP --> GDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_data()</b></a>")
 
-GDATA --> GPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>select_pcil_positive()</b></a><br/><i>• 'sel', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
+GDATA --> GPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_positive()</b></a><br/><i>• 'sel', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
 
 GPOSFUNC --> GPOSPLOT("<b>Visualize PCIL (+)</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_all_pcil_positive()</b></a><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_best_pcil_positive()</b></a>")
 
-GPOSPLOT --> GNEGFUNC("<b>PCIL (-) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md'><b>select_pcil_negative()</b></a><br/><i>• 'global_available_ids', suggested for seed availability</i>")
+GPOSPLOT --> GNEGFUNC("<b>PCIL (-) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_negative()</b></a><br/><i>• 'global_available_ids', suggested for seed availability</i>")
 
 GNEGFUNC --> GNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_pcil_pairs()</b></a>")
 
@@ -107,13 +107,13 @@ GNEGFUNC --> GNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='htt
 
 REGION --> RPOSSTEP["<b>Select PCIL (+)/PCIL (-) pairs</b><br/>Identify lines that have an introgression covering the region [<b>PCIL (+)</b>]<br/>and lines genetically similar to the PCIL (+) but that do not have the introgression [<b>PCIL (-)</b>]<br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Region_to_PCIL.md'><b>R code and guide</b></a>"]
 
-RPOSSTEP --> RDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>load_pcil_data()</b></a>")
+RPOSSTEP --> RDATA("<b>Load PCIL data</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_data()</b></a>")
 
-RDATA --> RPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>select_pcil_positive()</b></a><br/><i>• 'sel', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
+RDATA --> RPOSFUNC("<b>PCIL (+) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_positive()</b></a><br/><i>• 'sel', suggested<br/>• 'global_available_ids', suggested for seed availability</i>")
 
 RPOSFUNC --> RPOSPLOT("<b>Visualize PCIL (+)</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_all_pcil_positive()</b></a><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_best_pcil_positive()</b></a>")
 
-RPOSPLOT --> RNEGFUNC("<b>PCIL (-) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md'><b>select_pcil_negative()</b></a><br/><i>• 'global_available_ids', suggested for seed availability</i>")
+RPOSPLOT --> RNEGFUNC("<b>PCIL (-) selection</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_negative_ReadMe.md'><b>panGenomeBreedr::fetch_pcil_negative()</b></a><br/><i>• 'global_available_ids', suggested for seed availability</i>")
 
 RNEGFUNC --> RNEGPLOT("<b>Visualize PCIL (+)/PCIL (-) pairs</b><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/plotting_functions_ReadMe.md'><b>plot_pcil_pairs()</b></a>")
 
@@ -157,9 +157,9 @@ SEED --> IDS
 
 IDS --> GLOBAL["Use SampleIDs as<br/><b>global_available_ids</b>"]
 
-GLOBAL --> POS["Run <b>select_pcil_positive()</b><br/>within the filtered population"]
+GLOBAL --> POS["Run <b>panGenomeBreedr::fetch_pcil_positive()</b><br/>within the filtered population"]
 
-POS --> NEG["Run <b>select_pcil_negative()</b><br/>using the same population restriction"]
+POS --> NEG["Run <b>panGenomeBreedr::fetch_pcil_negative()</b><br/>using the same population restriction"]
 
 NEG --> PAIRS["Filtered<br/><b>PCIL (+) / PCIL (-) pairs</b>"]
 
@@ -192,13 +192,13 @@ flowchart TD
 
 TARGETS["<b>Multiple targets of the same type</b><br/>PCVs | Genes | Regions <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_inputs_Readme.md'><b>Guide for multi-target inputs for the pipeline</b></a> <br/><br/><br/><a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/Multi_target_PCIL_gene_example.md'><b>R code and guide</b></a>"]
 
-TARGETS --> POS["Run <b>select_pcil_positive()</b><br/>for all targets"]
+TARGETS --> POS["Run <b>panGenomeBreedr::fetch_pcil_positive()</b><br/>for all targets"]
 
 POS --> INDEP["PCIL (+) identified<br/><b>independently for each target</b>"]
 
 INDEP --> SHARED["Identify SampleIDs that are<br/>PCIL (+) for <b>multiple targets</b>"]
 
-SHARED --> POS2["Re-run <b>select_pcil_positive()</b><br/>using shared SampleIDs"]
+SHARED --> POS2["Re-run <b>panGenomeBreedr::fetch_pcil_positive()</b><br/>using shared SampleIDs"]
 
 POS2 --> BEST["Selected multi-target<br/><b>PCIL (+)</b>"]
 
@@ -206,7 +206,7 @@ BEST --> NEG["Generate PCIL (-)<br/>candidate pool"]
 
 NEG --> SHAREDNEG["Identify PCIL (-) SampleIDs<br/>represented across <b>multiple targets</b>"]
 
-SHAREDNEG --> NEG2["Re-run <b>select_pcil_negative()</b><br/>using shared SampleIDs"]
+SHAREDNEG --> NEG2["Re-run <b>panGenomeBreedr::fetch_pcil_negative()</b><br/>using shared SampleIDs"]
 
 NEG2 --> PAIRS["Multi-target<br/><b>PCIL (+) / PCIL (-) pairs</b>"]
 
@@ -232,7 +232,7 @@ flowchart TD
 
 TARGET["<b>Target genomic position to fine map</b> <br/> <a href='https://github.com/claracruet/PCIL_selection_pipeline/blob/main/fine_mapping_example.md'><b>Guide for fine mapping idea</b></a> "]
 
-TARGET --> WINDOWS["Run <b>select_pcil_positive()</b><br/>using different window sizes"]
+TARGET --> WINDOWS["Run <b>panGenomeBreedr::fetch_pcil_positive()</b><br/>using different window sizes"]
 
 WINDOWS --> POS["Identify PCIL (+) with different<br/><b>introgression boundaries</b>"]
 
