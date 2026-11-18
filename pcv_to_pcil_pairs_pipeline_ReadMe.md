@@ -66,33 +66,6 @@ For PCV-based selection, `results$pcil_summary` will be used to restrict the dow
 
 [Family selection documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_families_by_variant_ReadMe.md)
 
----
-
-# 3. Load PCIL genomic data
-
-```r
-# we are going to first source the genomic infomation for the PCILs that we will be using
-source("https://gist.githubusercontent.com/claracruet/b6ade06ffa38c1e6bb97c813621632ea/raw/load_pcil_data.R")
-
-# loading up the PCIL data
-# Run the loading function and save the PCIL data list into an object.
-pcil_data <- load_pcil_data()
-
-```
-
-[PCIL data documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/load_pcil_data_ReadMe.md)
-
----
-
-# 4. Load PCIL (+) selection function
-
-```r
-# loading the pcil_pos function
-# Load the function that identifies PCIL-positive lines.
-source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832597439/raw/select_pcil_positive.R")
-```
-
-[PCIL positive documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md)
 
 ---
 # 5. Prepare the PCV input
@@ -101,10 +74,10 @@ Get the position of the selected PCV:
 
 ```r
 #creating selection dataframe
-input_pcil<- data.frame(Region=selection, Chr="Chr03", pos=66131272)
+input_pcil<- data.frame(variant_id=selection, chrom="Chr03", pos=66131272)
 
 ```
-<img width="270" height="45" alt="image" src="https://github.com/user-attachments/assets/6e0f630b-2dc9-4e13-90b7-9229078852b4" />
+<img width="271" height="48" alt="image" src="https://github.com/user-attachments/assets/75017b38-4e04-4a7c-bfa2-dcb9fc11d348" />
 
 ---
 
@@ -114,13 +87,10 @@ Search for PCIL (+) within families expected to segregate for the PCV:
 
 ```r
 # running pcil_pos
-pcil_positives<- select_pcil_positive(pcil_data = pcil_data, 
-                                      input = input_pcil, 
-                                      type = "pos",  
-                                      sel = 5,
-                                      window = 1000, 
-                                      available_ids = results$pcil_summary[c("sample_id","selection")],
-                                      )
+pcil_positives<-panGenomeBreedr::fetch_pcil_positive(pcil_data = pcil_data, variants_select_geno = input_pcil, 
+                                     type = "position", sel = 5, 
+                                     window = 1000, 
+                                     available_ids =  results$pcil_summary[c("sample_id","selection")])
 
 # select_pcil_positive, returns a list
 names(pcil_positives)
@@ -137,17 +107,17 @@ head(pcil_positives$pcil_positive)
 # you can check how many you have by
 nrow(pcil_positives$pcil_positive)
 ```
-<img width="823" height="271" alt="image" src="https://github.com/user-attachments/assets/23549418-8788-45f9-b5e1-925eef3d80df" />
+<img width="938" height="156" alt="image" src="https://github.com/user-attachments/assets/9a2ca78a-ea31-4148-b9b2-56f8b16cacd4" />
 
 
 Check family representation:
 
 ```r
 # if you want to understand what families are represented, you can use the metadata for it
-left_join(pcil_positives$pcil_positive,pcil_data$metadata, by = "SampleID") %>% 
-  count(Region, Family)
+left_join(pcil_positives$pcil_positive,pcil_data$pcil_metadata, by = c("SampleID"="sample_id")) %>% 
+  count(Region, family)
 ```
-<img width="551" height="442" alt="image" src="https://github.com/user-attachments/assets/58d285ac-3e29-4347-83fd-63ea6808f000" />
+<img width="670" height="352" alt="image" src="https://github.com/user-attachments/assets/8487e646-8a9d-422c-bfe9-5a694209158e" />
 
 
 Inspect the selected PCIL (+):
