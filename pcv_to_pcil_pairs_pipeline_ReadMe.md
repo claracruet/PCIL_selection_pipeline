@@ -16,18 +16,22 @@ Visualize PCIL (+) / PCIL (-) pairs
 
 ---
 
-# 1. Identify PCIL families segregating for the PCV
+# 1. Load PCIL data from pangenomebreeder
+```r
+# Loading PCIL dataset
+panGenomeBreedr::fetch_pcil_data(connect_db_mode = 'online')->pcil_data
+```
+
+# 2. Identify PCIL families segregating for the PCV
 
 ```r
 # Variant selection
 selection=c("INDEL_Chr03_66131272")
 
-# Now we are going to source the "select_pcil_fam_by_variant_pangb.R" from gist
-source("https://gist.githubusercontent.com/claracruet/7fb4425da272d985d747eb032550c80f/raw/select_pcil_fam_by_variant_pangb.R")
+# Runing fetch_pcil_families_by_variant()
+# we need the pcil_data, the database mode and our selection
+results<-panGenomeBreedr::fetch_pcil_families_by_variant(selection=selection, pcil_data = pcil_data, connect_db_mode = "online")
 
-# Runing select_pcil_fam_by_variant_pangb()
-# the only parameter needed is your selection, it will use the pcil metadata to know which libraries from our database are PCIL parents, you do not have to update the link
-results<-select_pcil_families_by_variant(selection=selection)
 
 # Results output a list of three elements
 names(results)
@@ -47,9 +51,10 @@ head(results$pcil_family_summary)
 # PCIL lines from families expected to segregate
 head(results$pcil_summary)
 ```
-<img width="407" height="177" alt="image" src="https://github.com/user-attachments/assets/737ca4aa-77e0-4f4e-8c8b-ce5d1d360a42" />
-<img width="535" height="100" alt="image" src="https://github.com/user-attachments/assets/74d17cb2-14ce-4917-8421-c9ee975852e1" />
-<img width="607" height="126" alt="image" src="https://github.com/user-attachments/assets/ee82f1d4-2d69-4f5c-b989-4b0fb7b43b21" />
+<img width="294" height="119" alt="image" src="https://github.com/user-attachments/assets/1337a03b-89a9-49c5-bf42-bb4e66af2667" />
+<img width="473" height="90" alt="image" src="https://github.com/user-attachments/assets/ea89f597-af9b-40f3-96d0-4744ee7359ad" />
+<img width="548" height="113" alt="image" src="https://github.com/user-attachments/assets/38041171-b00b-484f-b339-0a00a978a26a" />
+
 
 
 For PCV-based selection, `results$pcil_summary` will be used to restrict the downstream search to lines from families expected to segregate for the PCV.
@@ -60,7 +65,7 @@ For PCV-based selection, `results$pcil_summary` will be used to restrict the dow
 
 ---
 
-# 2. Load PCIL genomic data
+# 3. Load PCIL genomic data
 
 ```r
 # we are going to first source the genomic infomation for the PCILs that we will be using
@@ -76,7 +81,7 @@ pcil_data <- load_pcil_data()
 
 ---
 
-# 3. Load PCIL (+) selection function
+# 4. Load PCIL (+) selection function
 
 ```r
 # loading the pcil_pos function
@@ -87,7 +92,7 @@ source("https://gist.githubusercontent.com/claracruet/189e3a4a2aabf0527ef0845832
 [PCIL positive documentation](https://github.com/claracruet/PCIL_selection_pipeline/blob/main/select_pcil_positive_ReadMe.md)
 
 ---
-# 4. Prepare the PCV input
+# 5. Prepare the PCV input
 
 Get the position of the selected PCV:
 
@@ -100,7 +105,7 @@ input_pcil<- data.frame(Region=selection, Chr="Chr03", pos=66131272)
 
 ---
 
-# 5. Select PCIL (+)
+# 6. Select PCIL (+)
 
 Search for PCIL (+) within families expected to segregate for the PCV:
 
@@ -155,7 +160,7 @@ head(pcil_positives$best_lines)
 
 ---
 
-# 6. Visualize PCIL (+)
+# 7. Visualize PCIL (+)
 
 ### All PCIL (+)
 
@@ -187,7 +192,7 @@ best_pcil_pos_plot
 ---
 
 
-# 7. Select PCIL (-)
+# 8. Select PCIL (-)
 
 Select PCIL (-) controls for the final PCIL (+) lines.
 
@@ -243,7 +248,7 @@ head(pcil_negatives$pairs_extended)
 
 ---
 
-# 8. Visualize PCIL (+) / PCIL (-) pairs
+# 9. Visualize PCIL (+) / PCIL (-) pairs
 
 ```r
 # Sourcing function to plot pcil pairs
