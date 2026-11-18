@@ -5,10 +5,10 @@ The PCIL selection pipeline relies on a standardized set of genomic and metadata
 These datasets are assembled using:
 
 ```r
-pcil_data <- load_pcil_data()
+pcil_data <- panGenomeBreedr::fetch_pcil_data(connect_db_mode =  "online")
 ```
 
-`load_pcil_data()` collects the core PCIL datasets into a single R object that can be used consistently throughout the PCIL (+) and PCIL (−) selection workflow.
+`fetch_pcil_data()` collects the core PCIL datasets into a single R object that can be used consistently throughout the PCIL (+) and PCIL (−) selection workflow.
 
 The function does not generate the underlying genomic analyses. Instead, it loads and harmonizes outputs generated from the PCIL DArTseq genotyping data, the PCIL introgression-mapping pipeline, PCIL metadata, and genome annotation resources.
 The introgression mapping was conducted by Dr. Gaia Cortinovis as part of the BMG Allele Mining project and is currently being developed for publication as a manuscript.
@@ -232,4 +232,4 @@ For users of the PCIL selection pipeline, these datasets are loaded automaticall
 
 The detailed generation and QC procedures for each dataset are documented separately so that the main PCIL selection guide can remain focused on how to use the data rather than how each genomic resource was generated.
 
-[View `load_pcil_data()` source](https://gist.githubusercontent.com/claracruet/b6ade06ffa38c1e6bb97c813621632ea/raw/load_pcil_data.R)
+[View `fetch_pcil_data()` source](https://awkena.github.io/panGenomeBreedr/reference/fetch_pcil_data.html)
